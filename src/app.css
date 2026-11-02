@@ -1,0 +1,357 @@
+/* Inter for words, JetBrains Mono for code: variable, Latin only, from this origin. */
+@font-face { font-family: Inter; font-weight: 100 900; font-display: swap; src: url(/fonts/inter.woff2); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 100 800; font-display: swap; src: url(/fonts/jetbrains-mono.woff2); }
+
+:root {
+  /* three tones, from the page back to the paper and the well the code sits in */
+  --page: #f5f5f7;
+  --paper: #ffffff;
+  --well: #e6e8ef;
+  --well-2: #f3f4f8;
+  --fg: #1d1d1f;
+  --fg-2: #48484a;
+  --fg-3: #636368;
+  --line: rgba(0, 0, 0, 0.09);
+  --line-2: rgba(0, 0, 0, 0.16);
+  --glass: rgba(255, 255, 255, 0.86);
+  --ring: color-mix(in srgb, var(--fg) 60%, transparent);
+  --lift: 0 1px 2px rgba(20, 24, 40, 0.06), 0 12px 24px -16px rgba(20, 24, 40, 0.18);
+  --edge: 0 0 #0000;
+  --sunk: var(--well-2);
+  --dip: inset 0 1px 3px rgba(20, 24, 40, 0.14);
+  --float: 0 0 0 1px var(--line), 0 1px 2px rgba(20, 24, 40, 0.06), 0 14px 32px -10px rgba(20, 24, 40, 0.22);
+  --accent: #0066cc;
+  --danger: #b3261e;
+  --tint: color-mix(in srgb, var(--danger) 7%, var(--paper));
+  /* motion: nothing runs longer than 300ms, and only transform and opacity move */
+  --out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --in: cubic-bezier(0.4, 0, 1, 1);
+  --io: cubic-bezier(0.65, 0, 0.35, 1);
+  --pop: cubic-bezier(0.2, 0.9, 0.3, 1.06);
+  --rel: cubic-bezier(0.3, 1.25, 0.5, 1);
+  --sans: Inter, -apple-system, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --gut: 80px;
+  --text: 1;
+  --read: var(--sans);
+  --card: 344px;
+  --jump: 96px;
+  /* The panel system: one spacing step, one inset, one set of heights, radii, type sizes and timings.
+     One left edge: a sheet's 8px padding plus a row's 12px inset puts every label, heading and note 20px in, where the dock's title starts. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 20px;
+  --s6: 24px;
+  --pad: 8px;
+  --inset: 12px;
+  --lab: 96px;
+  --row: 44px;
+  --row-2: 56px;
+  --ctl: 32px;
+  --btn: 36px;
+  --r-sheet: 18px;
+  --r-group: 10px;
+  --r-dialog: 22px;
+  --r-tile: 14px;
+  --r-key: 6px;
+  --fs-cap: 11px;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 15px;
+  --fs-num: 34px;
+  /* 16px at 1.9 draws the same 1.27px line as the 18px toolbar icons at 1.7 */
+  --icon: 16px;
+  /* every icon's line, at every size (see the rule under `button`) */
+  --stroke: 1.3px;
+  --t1: 100ms;
+  --t2: 160ms;
+  --t3: 220ms;
+  --t4: 300ms;
+  /* One set of states for every control: a fill of its own ink under the pointer, while it is chosen or its card is open, and while it is
+     held down; and one press, a control shrinking a little (a large surface, a tile or the drop area, a little less). */
+  --hover: 0.08;
+  --held: 0.12;
+  --held-hover: 0.16;
+  --press: 0.14;
+  --press-scale: 0.97;
+  --press-surface: 0.985;
+  --fill: color-mix(in srgb, var(--fg) 6%, transparent);
+  --track: color-mix(in srgb, var(--fg) 7%, transparent);
+  --thumb: #ffffff;
+  --thumb-shadow: 0 1px 2px rgba(20, 24, 40, 0.12), 0 0 0 0.5px rgba(20, 24, 40, 0.08);
+  --sw-off: color-mix(in srgb, var(--fg) 45%, var(--paper));
+  --knob: #ffffff;
+  --knob-on: var(--paper);
+  --btn-2: color-mix(in srgb, var(--fg) 8%, transparent);
+  --ok: #1d8a4a;
+  --wait: #b26b00;
+  color-scheme: light;
+}
+
+
+@media screen {
+  :root[data-theme='dark'] {
+    --page: #0a0a0c;
+    --paper: #1a1a21;
+    --well: #272833;
+    --well-2: #20212a;
+    --fg: #f5f5f7;
+    --fg-2: #cfcfd4;
+    --fg-3: #9a9aa1;
+    --line: rgba(255, 255, 255, 0.1);
+    --line-2: rgba(255, 255, 255, 0.2);
+    --glass: rgba(34, 34, 38, 0.84);
+    --lift: 0 0 #0000;
+    --edge: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --sunk: #121217;
+    --dip: inset 0 2px 5px rgba(0, 0, 0, 0.55);
+    --float: 0 0 0 1px var(--line), 0 14px 32px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --accent: #4da3ff;
+    --danger: #ff7b72;
+    --tint: color-mix(in srgb, var(--danger) 10%, var(--paper));
+    --track: color-mix(in srgb, var(--fg) 8%, transparent);
+    --thumb: #464754;
+    --thumb-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    --sw-off: #5c5d68;
+    --btn-2: color-mix(in srgb, var(--fg) 12%, transparent);
+    --ok: #4cc38a;
+    --wait: #f0b44c;
+    color-scheme: dark;
+  }
+}
+
+/* a finger needs 44px: controls and buttons grow, rows hold them */
+@media (pointer: coarse) { :root { --ctl: 44px; --btn: 44px; } }
+
+* { box-sizing: border-box; }
+
+/* no rubber-band at the document's edges: a bounce would carry the fixed header with it */
+html { -webkit-text-size-adjust: 100%; overscroll-behavior-y: none; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--fg);
+  font: 16px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The platform's own scrollbars, thin: they fade away where the system lets them, and color-scheme dresses them. */
+* { scrollbar-width: thin; }
+
+button { font: inherit; color: inherit; border: 0; background: none; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+/* One line for every icon, whatever its size: strokes are drawn at --stroke on screen rather than scaled with the icon, so a 14px mark in a
+   tab and an 18px tool in the dock read as one set. */
+svg[aria-hidden='true'][stroke='currentColor'] { stroke-width: var(--stroke); }
+svg[aria-hidden='true'][stroke='currentColor'] * { vector-effect: non-scaling-stroke; }
+/* the ring is the keyboard's: Tab, or an arrow moving through a list, brings it; a click or a tap never draws it (App.svelte marks the page) */
+:root:not([data-kb]) :focus-visible { outline: none; }
+
+/* One hover for every control: a fill of the text colour at 8%, behind the content. */
+.icon, .handle, .row { position: relative; isolation: isolate; }
+.icon::before, .handle::before, .row::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  corner-shape: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--t1) var(--out);
+}
+.icon:hover::before, .handle:hover::before, .row:hover::before { opacity: var(--hover); }
+.row:active::before { opacity: var(--press); }
+
+/* header: pills of glass float over the page, what is being read on the left and the tools on the right */
+
+/* the header is its own layer, so the page's scroll and bounce never repaint the glass pills under it */
+.bar { position: fixed; z-index: 16; inset: 0 0 auto; height: 56px; pointer-events: none; will-change: transform; }
+.bar .inner { position: relative; display: flex; align-items: flex-start; gap: 8px; padding: 8px 20px 0; }
+.pill {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--glass);
+  box-shadow: var(--float);
+  backdrop-filter: blur(22px) saturate(1.7);
+  pointer-events: auto;
+}
+
+/* The left pill is what is being read: a chip for each open notebook (a single static one when there is one), then the plus that opens another. */
+.tb { flex: 0 1 auto; min-width: 0; gap: 2px; padding: 4px; }
+/* the dock's contents button is a phone's way in; wider, the contents live on the edge */
+@media (min-width: 721px) {
+  .tb { max-width: calc(100vw - var(--card) - 48px); }
+  .tools { min-width: var(--card); justify-content: space-between; }
+  .tools [data-pop='outline'] { display: none; }
+}
+.tb-chip { position: relative; isolation: isolate; display: flex; align-items: center; flex: none; min-width: 0; max-width: min(200px, var(--most, 200px)); height: 36px; border-radius: 999px; color: var(--fg-3); transition: transform var(--t3) var(--rel); }
+.tb-chip::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: currentColor; opacity: 0; transition: opacity var(--t1) var(--out); }
+.tb-chip:hover::before { opacity: var(--hover); }
+.tb-chip:has(.tb-go:active) { transform: scale(var(--press-scale)); transition-duration: var(--t1); }
+.tb-chip.on, .tb-chip.one { color: var(--fg); }
+.tb-chip.on::before, .tb-chip.one::before { opacity: var(--held); }
+/* a chip may shrink below its name (min-width 0), so the name gives way inside the pill rather than pushing the chip and the plus out of it;
+   while the chips overflow, the strip caps them at its own width less its two fades (--most, Tabs.svelte), so the one being read can always be seen whole; the one notebook has the whole pill to itself and gives way to its name's length */
+.tb-chip.one { flex: 0 1 auto; max-width: none; }
+.tb-go { display: flex; align-items: center; gap: 7px; flex: 1 1 auto; min-width: 0; height: 100%; padding: 0 4px 0 12px; border-radius: inherit; font: 500 13px/1 var(--sans); color: inherit; }
+.tb-go:focus-visible { outline-offset: -2px; }
+.tb-ico { display: grid; place-items: center; flex: none; width: 14px; height: 16px; }
+.tb-ico svg { color: var(--fg-3); }
+.tb-ico img { display: block; }
+.tb-nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-block: 0.2em; margin-block: -0.2em; }
+/* Close has a slot of its own at the chip's end, so the icon never changes: × on the chip being read, × on any chip under the pointer
+   or the keyboard, and otherwise the unsaved dot when there are edits, as an editor's tabs do. */
+.tb-end { display: grid; place-items: center; flex: none; width: 24px; height: 24px; margin-right: 5px; }
+.tb-end > * { grid-area: 1 / 1; }
+.tb-x { position: relative; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 999px; color: var(--fg-3); }
+.tb-x:hover { background: color-mix(in srgb, var(--fg) calc(var(--hover) * 100%), transparent); color: var(--fg); }
+.tb-end .tb-x { opacity: 0; pointer-events: none; transition: opacity var(--t1) var(--out); }
+.tb-chip:is(.on, .one) .tb-end .tb-x { opacity: 1; pointer-events: auto; }
+.tb-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); transition: opacity var(--t1) var(--out); }
+/* local: a ring for a tab an agent changed since you looked, kept apart from the filled dot of unsaved edits */
+.tb-dot.news { background: none; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tb-chip.dirty .tb-end .tb-x { opacity: 0; pointer-events: none; }
+@media (hover: hover) {
+  .tb-chip:hover .tb-end .tb-x { opacity: 1; pointer-events: auto; }
+  .tb-chip.dirty:hover .tb-dot { opacity: 0; }
+}
+/* on touch, with no pointer to be over a chip, the one being read always offers to close */
+@media (hover: none) {
+  .tb-chip.dirty:is(.on, .one) .tb-end .tb-x { opacity: 1; pointer-events: auto; }
+  .tb-chip.dirty:is(.on, .one) .tb-dot { opacity: 0; }
+  .tb-x::after { content: ''; position: absolute; inset: -10px; }
+}
+:root[data-kb] .tb-chip:has(:focus-visible) .tb-end .tb-x { opacity: 1; pointer-events: auto; }
+:root[data-kb] .tb-chip.dirty:has(:focus-visible) .tb-dot { opacity: 0; }
+/* a notebook opened a moment ago comes into the strip; the ones already there do not move */
+.tb-chip.new { animation: rise var(--t3) var(--out); }
+@media (pointer: coarse) {
+  .tb { padding: 0; }
+  .tb-chip { height: 44px; }
+  .tb .tb-new { width: 44px; height: 44px; }
+}
+@media (forced-colors: active) { .tb-chip.on, .tb-chip.one { outline: 1px solid CanvasText; outline-offset: -1px; } }
+.tools { flex: none; gap: 2px; padding: 4px; margin-left: auto; }
+/* a hairline between the groups of tools */
+.tools .sep { flex: none; width: 1px; height: 20px; margin: 0 4px; background: var(--line-2); }
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  color: var(--fg-2);
+  transition: transform var(--t3) var(--rel);
+}
+.icon:hover, .handle:hover { color: var(--fg); }
+.icon:active, .handle:active { transform: scale(var(--press-scale)); transition-duration: var(--t1); }
+
+.swap .glyph {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: rotate(-60deg) scale(0.6);
+  transition: transform var(--t4) var(--io), opacity var(--t2) var(--out);
+}
+.swap .glyph.on { opacity: 1; transform: none; }
+
+/* the desk: no sheet. The source and the page sit on the page itself and scroll under the glass, a hairline between them when both show. */
+#app { height: 100dvh; }
+body { overflow: hidden; }
+:root { --col: 760px; }
+:root[data-width='normal'] { --col: 1120px; }
+:root[data-width='wide'] { --col: 100%; }
+/* Wide is the window less a gutter on each side, clear of the contents ticks on the right edge */
+:root[data-width='wide'] .pane.read > div { padding-inline: var(--gut); }
+:root[data-width='wide'] .desk.write .cm-content { --ed-pad: var(--gut); }
+
+/* the corners: text size on the right, Show in Finder on the left (md Local); under the cards, over the page */
+.first { flex: none; margin: 0 0 16px; text-align: center; color: var(--fg-3); font-size: var(--fs-sm); }
+.first button { color: var(--accent); font-weight: 500; }
+.corner { position: fixed; z-index: 14; bottom: 16px; height: 40px; gap: 2px; padding: 4px; }
+.corner.r { right: 20px; }
+.corner.l { left: 20px; }
+.corner .icon { width: 32px; height: 32px; }
+.corner .icon:disabled { opacity: 0.35; cursor: default; }
+.corner .icon:disabled::before { opacity: 0; }
+.corner .pct { width: auto; min-width: 48px; padding: 0 6px; font: 600 var(--fs-xs)/1 var(--sans); font-variant-numeric: tabular-nums; }
+.corner .a { font-weight: 600; line-height: 1; }
+.corner .a.s { font-size: 11px; }
+.corner .a.l { font-size: 16px; }
+@media (pointer: coarse) { .corner { height: 52px; } .corner .icon { width: 44px; height: 44px; } }
+.desk { position: fixed; inset: 0; display: flex; overflow: hidden; }
+.pane { min-width: 0; height: 100%; }
+.pane.write { flex: var(--split) 1 0; }
+.pane.read { flex: calc(1 - var(--split)) 1 0; display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scroll-padding-top: 72px; }
+.pane.read > div { flex: 1 0 auto; box-sizing: border-box; width: 100%; max-width: var(--col); margin: 0 auto; padding: 72px 40px 96px; }
+.desk.write .pane.read, .desk.write .grip, .desk.read .pane.write, .desk.read .grip, .desk.page .pane.write, .desk.page .grip { display: none; }
+/* alone, a pane takes the whole window: a grow factor under 1 would leave the rest empty */
+.desk.write .pane.write, .desk.read .pane.read, .desk.page .pane.read { flex: 1 1 0; }
+/* the source can scroll its end up to the reading line, so the page must be able to as well */
+.desk.split .pane.read > div { padding-bottom: 40vh; }
+/* room above the first line for the bar that hangs under the search field while a block is open */
+.desk.page .pane.read > div { padding-top: 144px; }
+.desk.write .pane.write { --ed-col: var(--col); }
+.grip { position: relative; flex: none; width: 1px; background: var(--line); cursor: col-resize; touch-action: none; }
+.grip::after { content: ''; position: absolute; inset: 0 -5px; }
+.grip:hover, .grip:active { background: var(--line-2); }
+
+.icon .safe { position: absolute; top: 7px; right: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 1.5px var(--glass); }
+.icon .safe.warn { background: var(--wait); }
+
+/* at the end of the page, one quiet line: two symbols, then who made it */
+.made { flex: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px 24px; color: var(--fg-3); font-size: 12px; }
+.made nav { display: flex; gap: 2px; }
+.made nav a { position: relative; isolation: isolate; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; color: var(--fg-3); transition: color var(--t1) var(--out), transform var(--t3) var(--rel); }
+.made nav a::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: currentColor; opacity: 0; transition: opacity var(--t1) var(--out); }
+.made nav a:hover { color: var(--fg); }
+.made nav a:hover::before { opacity: var(--hover); }
+.made nav a:active { transform: scale(var(--press-scale)); transition-duration: var(--t1); }
+.made nav a:focus-visible { outline-offset: -2px; }
+.made nav svg { width: 15px; height: 15px; }
+.made .by { display: flex; align-items: center; gap: 6px; min-height: 22px; color: inherit; text-decoration: none; white-space: nowrap; }
+.made .heart { fill: currentColor; }
+.made b { font-weight: 650; letter-spacing: -0.005em; color: var(--fg-2); transition: color var(--t2) var(--out); }
+.made .by:hover b, .made .by:focus-visible b { color: var(--fg); }
+
+.droop { position: fixed; z-index: 30; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--page) 72%, transparent); backdrop-filter: blur(6px); pointer-events: none; animation: rise var(--t2) var(--out); }
+.droop span { padding: 14px 24px; border-radius: 999px; background: var(--glass); box-shadow: var(--float); font: 500 var(--fs-md)/1 var(--sans); }
+.note { position: fixed; z-index: 25; left: 50%; bottom: 44px; display: flex; align-items: center; gap: var(--s3); max-width: calc(100vw - 24px); min-height: 40px; padding: 0 18px; border-radius: 999px; background: var(--glass); box-shadow: var(--float); backdrop-filter: blur(22px) saturate(1.7); font-size: var(--fs-sm); transform: translateX(-50%); animation: note var(--t3) var(--out); }
+.note button { font-weight: 600; color: var(--accent); }
+@keyframes note { from { opacity: 0; transform: translate(-50%, 6px); } }
+@keyframes rise { from { opacity: 0; } }
+
+#print { display: none; }
+
+@media (max-width: 860px) {
+  .desk.split .pane.read, .desk.split .grip { display: none; }
+}
+@media (max-width: 720px) {
+  /* a transformed layer would hold the dock's fixed position inside the header */
+  .bar { will-change: auto; }
+  .bar .inner { padding: 8px 8px 0; }
+  .bar .tb { flex: 1; }
+  /* the dock moves to the thumb */
+  .tools { position: fixed; left: 8px; right: 8px; bottom: calc(10px + env(safe-area-inset-bottom)); margin: 0; }
+  .tools .icon { flex: 1 1 0; min-width: 0; height: 44px; }
+  .tools .sep { display: none; }
+  .pane.read > div { padding: 68px 20px 96px; }
+  .cm-content { --ed-pad: 20px; }
+  :root[data-width] .pane.read > div { padding-inline: 20px; }
+  :root[data-width] .cm-content { --ed-pad: 20px; }
+  .corner { display: none; }
+  .made { padding-bottom: 76px; }
+  .note { bottom: 72px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; } }
+
+@media print { body { overflow: visible; background: #fff; } body > :not(#app), #app > :not(#print) { display: none !important; } #print { display: block; padding: 0; } }

@@ -1,0 +1,7 @@
+/* Newsreader, a text serif with a small x-height, set larger. Loaded only when chosen (public/theme.js, theme.svelte.ts). OFL: /fonts/OFL.txt */
+@font-face { font-family: Newsreader; font-style: normal; font-weight: 200 800; font-display: swap; src: url(/fonts/newsreader.woff2) format('woff2'); }
+@font-face { font-family: Newsreader; font-style: italic; font-weight: 200 800; font-display: swap; src: url(/fonts/newsreader-italic.woff2) format('woff2'); }
+:root[data-face='newsreader'] { --read: Newsreader, 'Iowan Old Style', Palatino, Georgia, serif; }
+:root[data-face='newsreader'] .md { font-size: calc(17px * var(--text, 1)); line-height: 1.6; }
+:root[data-face='newsreader'] .md :is(h1, h2, h3, h4, h5, h6) { font-weight: 600; letter-spacing: -0.01em; }
+@media print { :root[data-face='newsreader'] #print { font-size: calc(11pt * var(--text, 1)); } }

@@ -1,0 +1,16 @@
+@page { margin: 18mm 18mm 20mm; @bottom-center { content: counter(page); font: 500 8.5pt/1 Inter, -apple-system, system-ui, sans-serif; color: #8a8a90; } }
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html:root, html:root[data-palette] { --page: #fff; --paper: #fff; color-scheme: light; }
+  #print { font-size: calc(10.5pt * var(--text, 1)); line-height: 1.55; color: var(--fg); }
+  #print :is(h1, h2, h3, h4, h5, h6) { break-after: avoid; break-inside: avoid; }
+  #print :is(p, li) { orphans: 3; widows: 3; }
+  #print :is(.tbl, figure, .code, .alert, blockquote, .math-block, img, tr) { break-inside: avoid; }
+  #print thead { display: table-header-group; }
+  #print :is(pre, code) { white-space: pre-wrap; overflow-wrap: anywhere; }
+  #print .tbl { overflow: visible; }
+  #print a { text-decoration: none; }
+  #print a[href^='http']:not(.bare, .anchor)::after { content: ' (' attr(href) ')'; color: var(--fg-3); font-size: 0.85em; overflow-wrap: anywhere; }
+  #print :is(.anchor, .copy, .fig-bar) { display: none; }
+  #print * { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}

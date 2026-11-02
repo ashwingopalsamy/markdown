@@ -1,0 +1,45 @@
+{
+  "name": "md",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node tools/site.mjs && node tools/audit.mjs",
+    "local": "npm run build && node tools/serve.mjs",
+    "serve": "node tools/serve.mjs",
+    "build:app-local": "vite build --mode md-local && node tools/site.mjs local && node tools/audit.mjs local",
+    "build:local": "npm run build:app-local && rm -rf local/dist && cp -R dist-local local/dist && cd local && go build -o md .",
+    "audit:proof": "node tools/audit.mjs",
+    "verify:site": "node tools/verify.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "deploy:dry": "npm run build && wrangler deploy --dry-run",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tsconfig/svelte": "5.0.8",
+    "@types/node": "26.6.5",
+    "svelte": "5.57.2",
+    "svelte-check": "4.7.7",
+    "typescript": "6.0.3",
+    "vite": "8.3.5",
+    "wrangler": "4.154.0"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "6.18.6",
+    "@codemirror/commands": "6.8.1",
+    "@codemirror/lang-markdown": "6.3.3",
+    "@codemirror/language": "6.11.2",
+    "@codemirror/state": "6.5.2",
+    "@codemirror/view": "6.38.1",
+    "@lezer/highlight": "1.2.1",
+    "@plantuml/core": "1.2026.9",
+    "dompurify": "3.4.17",
+    "katex": "0.19.1",
+    "marked": "18.1.1",
+    "mermaid": "11.9.0",
+    "shiki": "4.5.0"
+  }
+}

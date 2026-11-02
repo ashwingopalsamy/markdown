@@ -1,0 +1,155 @@
+.md { font-family: var(--read, var(--sans)); font-size: calc(16px * var(--text, 1)); }
+.md > :first-child { margin-top: 0; }
+.md > :last-child { margin-bottom: 0; }
+.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 { margin: 1.6em 0 0.5em; line-height: 1.25; letter-spacing: -0.02em; font-weight: 650; }
+.md h1 { font-size: 2.1em; letter-spacing: -0.03em; font-weight: 700; margin: 1em 0 0.6em; }
+.md h2 { font-size: 1.6em; margin-top: 2em; }
+.md h3 { font-size: 1.28em; }
+.md h4, .md h5, .md h6 { font-size: 1.05em; }
+.md p, .md ul, .md ol, .md blockquote, .md pre, .md details, .md dl { margin: 0.8em 0; }
+.md ul, .md ol { padding-left: 1.5em; }
+.md li + li { margin-top: 0.25em; }
+.md li:has(> input[type='checkbox'], > p:first-child > input[type='checkbox']) { list-style: none; margin-left: -1.2em; }
+.md input[type='checkbox'] { margin: 0 0.5em 0 0; vertical-align: -0.1em; accent-color: var(--accent); }
+/* Links in the document's own content are blue, in both themes. Visited ones are left as they are. */
+.md a { color: var(--accent); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.md a:hover { color: color-mix(in srgb, var(--accent) 78%, var(--fg)); text-decoration-color: currentColor; }
+.md code { font: 0.88em var(--mono); padding: 0.15em 0.45em; border-radius: 6px; background: var(--well); }
+.md pre { padding: 14px 18px; border-radius: 10px; corner-shape: squircle; background: var(--well); overflow-x: auto; font-size: 0.8125em; line-height: 1.65; tab-size: 4; }
+.md pre code { padding: 0; border: 0; background: none; font-size: inherit; }
+.md [hidden] { display: none; }
+.md blockquote { padding: 0.05em 1.1em; border-radius: 10px; corner-shape: squircle; background: color-mix(in srgb, var(--well) 60%, transparent); color: var(--fg-2); }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+/* a rule an author put before a heading would double the heading's own */
+.md hr:has(+ [data-h]) { display: none; }
+.md img { max-width: 100%; height: auto; border-radius: 10px; corner-shape: squircle; }
+.md .tbl { margin: 0.8em 0; max-width: 100%; overflow-x: auto; border-radius: 10px; corner-shape: squircle; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line); }
+.md table { border-collapse: collapse; font-size: 0.94em; margin: 0; min-width: 100%; }
+.md th, .md td { padding: 9px 16px; text-align: left; }
+.md :is(th, td)[align='right'] { text-align: right; font-variant-numeric: tabular-nums; }
+.md :is(th, td)[align='center'] { text-align: center; }
+.md th { font-weight: 600; background: var(--well); }
+.md tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--fg) 3%, var(--paper)); }
+.md .math-block { margin: 1em 0; overflow-x: auto; text-align: center; }
+.md .math.display { display: block; }
+.md .katex { font-size: 1.08em; }
+.md .math[data-tex] { font-family: var(--mono); font-size: 0.9em; color: var(--fg-3); }
+
+.rimg { display: inline-block; max-width: 100%; padding: 2px 10px; border-radius: 999px; background: var(--well); color: var(--fg-3); font: 12px/1.6 var(--sans); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+
+/* Every heading but the first opens with a hairline and room above it. The room says the step taken to reach it,
+   most when a section starts or the outline climbs back out, least when it goes one level deeper; the length of the
+   line says the heading's rank, from the full width for the top level down to a short stroke. Both sit outside the
+   heading's box, in its margin, so the slab drawn on a block being pointed at or edited holds the words alone. */
+.md > [data-h] {
+  --gap: 28px;
+  --pad: 16px;
+  --len: 100%;
+  --rule: var(--line);
+  position: relative;
+  margin-top: calc(var(--gap) + var(--pad));
+  /* a jump from the contents still puts the hairline where it always did */
+  scroll-margin-top: calc(var(--jump, 0px) + var(--pad));
+}
+.md > [data-h]::after { content: ''; position: absolute; top: calc(var(--pad) * -1); left: 0; width: var(--len); height: 1px; background: var(--rule); pointer-events: none; }
+.md > [data-h='top'] { --gap: 64px; --pad: 32px; }
+.md > [data-h='out'] { --gap: 48px; --pad: 24px; }
+.md > [data-h='in'] { --gap: 20px; --pad: 14px; }
+.md > [data-d='0'] { --rule: var(--line-2); }
+.md > [data-d='2'] { --len: 240px; }
+.md > [data-d='3'] { --len: 96px; }
+.md > [data-h]:first-child { margin-top: calc(max(10px, var(--gap) - 16px) + var(--pad)); }
+/* on paper the room is padding again, which a page break keeps, so a heading that starts a page keeps its hairline */
+@media print {
+  .md > [data-h] { margin-top: var(--gap); padding-top: var(--pad); }
+  .md > [data-h]:first-child { margin-top: max(10px, calc(var(--gap) - 16px)); }
+  .md > [data-h]::after { top: 0; }
+}
+
+/* Code: a bar with the language and a copy button above the block, which scrolls on its own. */
+.md .code { position: relative; margin: 0.8em 0; border-radius: 10px; corner-shape: squircle; background: var(--well); overflow: hidden; }
+.md .code pre { margin: 0; border-radius: 0; background: none; }
+.md .code-bar { display: flex; align-items: center; justify-content: space-between; min-height: 28px; padding: 0 6px 0 18px; color: var(--fg-3); font: 11.5px/1 var(--sans); letter-spacing: 0.02em; }
+.md .code-bar + pre { padding-top: 0; }
+/* a block with no language has no label to hold the bar up: the copy button floats at the corner and the code keeps its normal padding */
+.md .code-bar:has(.code-lang:empty) { position: absolute; top: 0; right: 0; z-index: 1; min-height: 0; padding: 4px 6px 0 0; }
+.md .code-bar:has(.code-lang:empty) + pre { padding-top: 14px; }
+.md .code-lang { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.md .code .copy { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 7px; corner-shape: squircle; background: none; color: var(--fg-3); cursor: pointer; opacity: 0; transition: opacity 0.12s, color 0.12s, background 0.12s; }
+.md .code:hover .copy, .md .code .copy:focus-visible, .md .code .copy.done { opacity: 1; }
+@media (hover: none) { .md .code .copy { opacity: 1; } }
+.md .code .copy:hover { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.md .code .copy:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; }
+.md .copy > svg { grid-area: 1 / 1; }
+.md .copy .i-check, .md .copy.done .i-copy { display: none; }
+.md .copy.done .i-check { display: block; color: var(--ok); }
+.md .hl span { color: var(--shiki-light); font-style: var(--shiki-light-font-style); font-weight: var(--shiki-light-font-weight); }
+@media screen { :root[data-theme='dark'] .md .hl span { color: var(--shiki-dark); font-style: var(--shiki-dark-font-style); font-weight: var(--shiki-dark-font-weight); } }
+
+/* Alerts: one accent per kind, all from the page's own tokens. */
+.md .alert { --tone: var(--accent); margin: 0.8em 0; padding: 0.7em 1.1em 0.75em; border-radius: 10px; corner-shape: squircle; background: color-mix(in srgb, var(--tone) 8%, var(--paper)); box-shadow: inset 3px 0 0 var(--tone); }
+.md .alert-tip { --tone: var(--ok); }
+.md .alert-important { --tone: color-mix(in srgb, var(--accent) 55%, var(--danger)); }
+.md .alert-warning { --tone: var(--wait); }
+.md .alert-caution { --tone: var(--danger); }
+.md .alert > :nth-child(2) { margin-top: 0; }
+.md .alert > :last-child { margin-bottom: 0; }
+.md .alert-title { display: flex; align-items: center; gap: 0.5em; margin: 0; color: var(--tone); font: 600 0.9em/1.5 var(--sans); letter-spacing: 0.01em; }
+.md .alert-title svg { flex: none; }
+
+/* Footnotes, marks, sub and super, definitions */
+.md sup.fnref { font-size: 0.75em; line-height: 0; margin-left: 1px; }
+.md sup.fnref a { text-decoration: none; padding: 0 2px; }
+.md .footnotes { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); color: var(--fg-2); font-size: 0.9em; }
+.md .footnotes ol { margin: 0; }
+.md .footnotes li > p { margin: 0.2em 0; }
+.md .footnotes li:target { background: color-mix(in srgb, var(--wait) 18%, transparent); border-radius: 6px; }
+.md .fnback { margin-left: 0.2em; text-decoration: none; }
+.md mark { padding: 0.05em 0.25em; border-radius: 4px; background: color-mix(in srgb, var(--wait) 32%, transparent); color: inherit; }
+.md dt { margin-top: 0.8em; font-weight: 650; }
+.md dd { margin: 0.2em 0 0 1.5em; color: var(--fg-2); }
+.md details { padding: 0.5em 1em; border-radius: 10px; corner-shape: squircle; background: color-mix(in srgb, var(--well) 60%, transparent); }
+.md summary { cursor: pointer; font-weight: 600; }
+.md details[open] > summary { margin-bottom: 0.5em; }
+.md kbd { font: 0.85em var(--mono); padding: 0.1em 0.45em; border-radius: 5px; border: 1px solid var(--line-2); background: var(--paper); }
+
+/* Front matter: a quiet key and value table, not a heading's worth of attention. */
+.md details.props { margin: 0 0 1.4em; padding: 0; border: 0; background: none; font-size: 0.82em; color: var(--fg-3); }
+.md details.props > summary { width: max-content; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.md details.props > .fm { margin: 6px 0 0; font-size: 1em; }
+.md table.fm tbody tr:nth-child(n), .md table.fm tbody tr:nth-child(n) > * { background: none; }
+.md table.fm { display: table; width: auto; min-width: 0; margin: 0 0 1.4em; border: 0; background: none; box-shadow: none; font-size: 0.82em; color: var(--fg-3); }
+.md table.fm th, .md table.fm td { padding: 2px 16px 2px 0; background: none; vertical-align: top; }
+.md table.fm th { font-weight: 500; white-space: nowrap; }
+.md pre.fm { padding: 0; background: none; color: var(--fg-3); font-size: 0.75em; }
+
+/* Diagrams */
+.md figure.mermaid { margin: 1em 0; overflow-x: auto; text-align: center; }
+.md .mermaid-svg svg { max-width: 100%; height: auto; }
+.md figure.mermaid.err { text-align: left; }
+.md .mermaid-error { margin: 0 0 0.4em; color: var(--danger); font: 12px/1.5 var(--mono); }
+
+/* Headings link to themselves and the contents list is a plain column. */
+.md :is(h1, h2, h3, h4, h5, h6) { position: relative; }
+.md .anchor { position: absolute; left: -1.1em; padding-right: 0.3em; text-decoration: none; opacity: 0; font-weight: 500; color: var(--fg-3); }
+.md .anchor::before { content: '#'; }
+.md :is(h1, h2, h3, h4, h5, h6):hover > .anchor, .md .anchor:focus-visible { opacity: 1; }
+.md nav.toc ul { margin: 0.8em 0; padding: 0; list-style: none; }
+.md nav.toc li { margin: 0.2em 0; }
+.md nav.toc .l1 { padding-left: 1em; }
+.md nav.toc .l2 { padding-left: 2em; }
+.md nav.toc .l3 { padding-left: 3em; }
+.md nav.toc .l4 { padding-left: 4em; }
+.md nav.toc .l5 { padding-left: 5em; }
+
+/* On paper the page alone: no bar, no button, and code that wraps rather than scrolls. */
+@media print {
+  .md .code-bar .copy, .md .anchor { display: none; }
+  .md .code { break-inside: avoid; }
+  .md pre { white-space: pre-wrap; overflow: visible; }
+  .md .tbl { overflow: visible; }
+}
+.md figure.mermaid { position: relative; }
+/* draw.io drawings are light by design: on a dark page they sit on a light rounded surface */
+.md .mermaid-svg img.drawio { display: block; box-sizing: border-box; max-width: 100%; height: auto; margin: 0 auto; padding: 12px; border: 1px solid var(--line); border-radius: 10px; corner-shape: squircle; background: #fff; }
+.md .drawio-note { margin: 0.5em 0 0; color: var(--fg-3); font-size: 12px; }

@@ -1,0 +1,33 @@
+/* What only md Local draws. The tokens are the app's own (app.css). */
+.pair { position: fixed; z-index: 60; inset: 0; display: grid; place-items: center; padding: 24px; background: var(--page); color: var(--fg); text-align: center; }
+.pair div { display: grid; justify-items: center; gap: 18px; }
+.pair p { margin: 0; font: 500 var(--fs-lg)/1.5 var(--sans); color: var(--fg-2); }
+.pair code, .lempty code { padding: 2px 8px; border-radius: 6px; background: var(--well); color: var(--fg); font: 500 0.92em var(--mono); }
+.lempty { position: fixed; inset: 0; z-index: 1; display: grid; place-items: center; margin: 0; padding: 24px; font: var(--fs-md)/1.5 var(--sans); color: var(--fg-3); pointer-events: none; }
+.lempty button { pointer-events: auto; color: var(--accent); }
+.lnote { position: fixed; z-index: 24; left: 50%; bottom: 12px; max-width: calc(100vw - 24px); padding: 4px 14px; border-radius: 999px; background: var(--glass); box-shadow: var(--float); backdrop-filter: blur(22px) saturate(1.7); font: var(--fs-xs)/1.6 var(--sans); color: var(--fg-2); transform: translateX(-50%); animation: rise var(--t2) var(--out); }
+.note { gap: var(--s4); }
+.corner.l { gap: 7px; padding: 0 14px 0 12px; font: 500 var(--fs-sm)/1 var(--sans); color: var(--fg-2); }
+.corner.l:hover { color: var(--fg); }
+@media (max-width: 720px) { .corner.l { display: none; } }
+@media (max-width: 720px) { .lnote { bottom: 118px; } }
+/* a tab that changed and has not been looked at */
+.tb-ico { position: relative; }
+.tb-unread { position: absolute; top: -3px; right: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--paper); }
+/* blocks that changed on disk fade from a tint, so the eye finds them */
+.md .md-fresh { animation: md-fresh 1.6s var(--out); }
+@keyframes md-fresh { from { background: color-mix(in srgb, var(--accent) 14%, transparent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent); border-radius: 6px; } }
+@media (prefers-reduced-motion: reduce) { .md .md-fresh { animation: none; } }
+.tb-txt small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* the search card's three options, set like its walk buttons */
+.find .opt { display: grid; place-items: center; flex: none; min-width: 28px; height: 28px; padding: 0 5px; border-radius: 999px; color: var(--fg-3); font: 600 var(--fs-xs)/1 var(--sans); transition: background var(--t1) var(--out), color var(--t1) var(--out); }
+.find .opt:hover { background: color-mix(in srgb, var(--fg) calc(var(--hover) * 100%), transparent); color: var(--fg); }
+.find .opt.on { background: color-mix(in srgb, var(--fg) calc(var(--held) * 100%), transparent); color: var(--fg); }
+.find .opt.on:hover { background: color-mix(in srgb, var(--fg) calc(var(--held-hover) * 100%), transparent); }
+.find .opt span { position: relative; }
+.find .opt.regex span { font-family: var(--mono); }
+/* the whole-word glyph: ab held in a bracket */
+.find .opt.word span::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px; border: 1.5px solid currentColor; border-top: 0; }
+.find .opt:focus-visible { outline-offset: 1px; }
+.find .field .n { margin-left: 2px; }
+.rep :disabled { opacity: 0.35; cursor: default; }

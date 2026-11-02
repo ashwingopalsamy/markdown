@@ -1,0 +1,10 @@
+// Static files and nothing else: there is no `main`, so no code of ours runs on Cloudflare. Logs and previews are off.
+{
+  "name": "md",
+  "compatibility_date": "2026-04-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "routes": [{ "pattern": "md.ashwingopalsamy.in", "custom_domain": true }],
+  "assets": { "directory": "./dist", "not_found_handling": "404-page" }
+}

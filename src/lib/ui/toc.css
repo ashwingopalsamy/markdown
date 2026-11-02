@@ -1,0 +1,121 @@
+/* The outline: tick marks along the right edge. Hovering or focusing them opens the full list. */
+.rail {
+  position: fixed;
+  z-index: 9;
+  top: 50%;
+  right: 0;
+  display: none;
+  width: 40px;
+  height: calc(var(--span) * 1px + 24px);
+  margin-top: calc(var(--span) * -0.5px - 12px);
+}
+/* While a panel is open the ticks step aside; they come back when it closes. */
+.rail.away { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity var(--t2) var(--out), visibility 0s var(--t2); }
+.stack { display: block; width: 100%; height: 100%; padding: 12px 0; cursor: default; }
+.stack:focus-visible { outline-offset: -6px; border-radius: 12px; }
+.ticks { position: relative; display: block; height: 100%; clip-path: inset(0 -200px); }
+.tr {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  padding-right: 14px;
+  transform: translateY(calc(var(--y) * 1px - var(--slide) * 1px));
+  transition: transform var(--t4) var(--io), opacity var(--t4) var(--out);
+}
+.tk {
+  position: relative;
+  width: max(6px, calc(16px - var(--d) * 4px));
+  height: 2px;
+  border-radius: 1px;
+  background: var(--fg-3);
+  opacity: 0.75;
+  transform-origin: 100% 50%;
+  transition: transform var(--t3) var(--io), opacity var(--t2) var(--out);
+}
+.tk::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--fg); opacity: 0; transition: opacity var(--t2) var(--out); }
+.tr.near .tk { opacity: 1; }
+.tr.now .tk { opacity: 1; transform: scale(1.5, 1.4); }
+.tr.now .tk::after { opacity: 1; }
+
+/* Where the margin has room, the heading being read is named beside its tick; hovering the ticks lists them all.
+   The name is only a caption: the pointer passes through it, so the list opens from the ticks and not from the text. */
+.lbl {
+  position: absolute;
+  right: 46px;
+  max-width: 172px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 12px/20px var(--sans);
+  color: var(--fg-3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t2) var(--out);
+}
+.rail:hover .lbl, .rail.pin .lbl, .rail:has(:focus-visible) .lbl { opacity: 0 !important; }
+
+.panel {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 284px;
+  max-height: min(72vh, 560px);
+  padding: var(--pad);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: var(--r-sheet);
+  corner-shape: squircle;
+  background: var(--glass);
+  box-shadow: var(--float);
+  -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  backdrop-filter: blur(22px) saturate(1.7);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(10px, -50%) scale(0.98);
+  transform-origin: 100% 50%;
+  transition: opacity var(--t2) var(--in) var(--t2), transform var(--t2) var(--in) var(--t2), visibility 0s calc(var(--t2) * 2);
+}
+.rail:hover .panel, .rail.pin .panel, .rail:has(:focus-visible) .panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%);
+  transition: opacity var(--t2) var(--out) var(--t1), transform var(--t3) var(--pop) var(--t1), visibility 0s;
+}
+
+.t {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 0 var(--inset) 0 calc(var(--inset) + var(--d, 0) * 12px);
+  overflow: hidden;
+  border-radius: 10px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 30px;
+  color: var(--fg-3);
+}
+.t::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: currentColor; opacity: 0; transition: opacity var(--t1) var(--out); }
+.t:hover::before { opacity: var(--hover); }
+.t.near, .t.top { color: var(--fg-2); }
+.t.top { font-weight: 500; }
+.t[aria-current] { color: var(--fg); font-weight: 600; }
+.t[aria-current]::before { background: var(--fg); opacity: 0.1; }
+.t:focus-visible { outline-offset: -2px; }
+
+/* Room, and for a new top-level heading a hairline, where the outline starts something new. */
+.sep { display: block; height: 6px; }
+.sep.big { height: 17px; }
+.sep.big::before { content: ''; display: block; height: 1px; margin: 8px var(--inset) 0; background: var(--line); }
+
+/* Past a phone's width the outline lives on the edge; a phone reaches it from the dock. */
+@media (min-width: 721px) { .rail { display: block; } }
+/* where the margin has room, the heading being read is named beside its tick */
+@media (min-width: 1360px) { .tr.now .lbl { opacity: 1; color: var(--fg); } }
+.rail.tight .lbl { display: none; }

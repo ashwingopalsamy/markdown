@@ -1,0 +1,30 @@
+/* A drawing's bar: the code block's copy button, three of them, shown the same way (hover, keyboard focus, or while its card is open) */
+.fig-bar { position: absolute; top: 2px; right: 6px; display: flex; gap: 2px; }
+.fig-bar button { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 7px; corner-shape: squircle; background: none; color: var(--fg-3); cursor: pointer; opacity: 0; transition: opacity 0.12s, color 0.12s, background 0.12s; }
+.md figure.mermaid:hover .fig-bar button, .fig-bar:has(:focus-visible) button, .fig-bar button[aria-expanded='true'], .fig-bar button.done { opacity: 1; }
+@media (hover: none) { .fig-bar button { opacity: 1; } }
+.fig-bar button:hover { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.fig-bar button:focus-visible { outline: 2px solid var(--ring); outline-offset: -2px; }
+.fig-bar svg { width: 16px; height: 16px; stroke-width: 2; }
+.fig-bar .done svg { color: var(--ok); }
+.md figure.mermaid.err > .fig-bar { display: none; }
+@media print { .fig-bar { display: none; } }
+/* the download card: the width field sits in the control column with its unit after it */
+.set-ctl.px { display: flex; align-items: center; gap: var(--s2); }
+.set-ctl.px .field { flex: 1; min-width: 0; width: auto; margin: 0; }
+.set-ctl.px .field:disabled { opacity: 0.35; }
+.set-ctl.px small { font-size: var(--fs-sm); color: var(--fg-3); }
+/* a drawing enlarged to the window */
+.fig-zoom { position: fixed; z-index: 40; inset: 0; display: grid; padding: 56px 24px 24px; background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(22px) saturate(1.7); animation: rise var(--t2) var(--out); }
+.fig-zoom .fig-back { position: absolute; inset: 0; cursor: zoom-out; }
+.fig-zoom img { position: relative; width: 100%; height: 100%; min-height: 0; object-fit: contain; pointer-events: none; }
+.fig-zoom .fig-x { position: absolute; top: 12px; right: 12px; }
+.md .fig-pic { position: relative; display: inline-block; max-width: 100%; vertical-align: baseline; }
+.md .fig-pic > img { display: block; }
+/* a picture's bar sits on the picture, so it carries its own glass: the chip shows and hides, the buttons inside stay shown */
+.md .fig-pic .fig-bar { top: 6px; right: 6px; padding: 2px; border-radius: 10px; corner-shape: squircle; background: var(--glass); backdrop-filter: blur(12px) saturate(1.6); box-shadow: var(--float); opacity: 0; transition: opacity 0.12s; }
+.md .fig-pic .fig-bar button { color: var(--fg-2); opacity: 1; }
+.md .fig-pic:hover .fig-bar, .md .fig-pic .fig-bar:has(:focus-visible, [aria-expanded='true'], .done) { opacity: 1; }
+@media (hover: none) { .md .fig-pic .fig-bar { opacity: 1; } }
+/* too small to hold three buttons */
+.md .fig-pic.small .fig-bar { display: none; }

@@ -1,0 +1,104 @@
+/* The block being edited keeps the look of the page: no card, no slab. Writing here is meant to feel like the page itself. */
+.md .editing {
+  position: relative;
+  outline: none;
+  border-radius: 4px;
+  corner-shape: squircle;
+  caret-color: var(--fg);
+  /* one line at its own size: an empty block keeps a line, and a heading does not grow as it opens */
+  min-height: 1lh;
+}
+.md .editing a { cursor: text; }
+/* an editor that opens near the top is scrolled as clear of the header as a jump from the contents */
+.md :is(.editing, .editing-src) { scroll-margin-top: var(--jump); }
+/* a new paragraph says what it is for until something is typed */
+.md .editing[data-placeholder]::before { content: attr(data-placeholder); position: absolute; inset: 0 auto auto 0; color: var(--fg-3); white-space: nowrap; pointer-events: none; }
+
+/* math, pictures and markup the editor cannot change sit in the line as one piece */
+.md .editing .atom {
+  user-select: all;
+  cursor: default;
+  background: var(--fill);
+  border-radius: var(--r-key);
+  padding: 0 2px;
+}
+.md .editing .atom.raw { font-family: var(--mono); font-size: 0.9em; color: var(--fg-3); }
+
+.md textarea.editing-src {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: calc(13.5px * var(--text, 1))/1.6 var(--mono);
+  color: var(--fg);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  corner-shape: squircle;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  tab-size: 4;
+}
+/* the rhythm of a paragraph, except as the cell's first block */
+.md :where(textarea.editing-src) { margin: 0.8em 0; }
+/* a formula being edited is drawn under its source */
+.md .editing-preview { pointer-events: none; }
+.md .editing-preview > .math-block { margin: 8px 0 0; }
+/* code and tables keep their lines and scroll sideways */
+.md textarea.editing-src.code { white-space: pre; overflow-x: auto; }
+
+/* The editing toolbar: a glass pill like the header's. Where it sits is the host's (it takes the space it is given, and
+   scrolls sideways where that is less than it needs). */
+.pg-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: max-content;
+  max-width: 100%;
+  padding: 4px;
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(1.7);
+  border-radius: 999px;
+  box-shadow: var(--float);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.pg-bar .icon { width: var(--btn); height: var(--btn); }
+.pg-bar .icon[aria-pressed='true'] { color: var(--fg); }
+.pg-bar .icon[aria-pressed='true']::before { opacity: var(--held); }
+.pg-bar .icon[aria-pressed='true']:hover::before { opacity: var(--held-hover); }
+.pg-bar .icon:disabled { opacity: 0.35; cursor: default; color: var(--fg-2); }
+.pg-bar .icon:disabled::before { opacity: 0; }
+.pg-bar .icon:focus-visible { outline-offset: -2px; }
+.pg-bar .sep { flex: none; width: 1px; height: 20px; margin: 0 4px; background: var(--line-2); }
+/* Windows high contrast drops shadows and fills, which is all the slab and a pressed button are made of */
+@media (forced-colors: active) {
+  .md :is(.editing, textarea.editing-src) { outline: 2px solid Highlight; outline-offset: 4px; }
+  .pg-bar .icon[aria-pressed='true'] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+}
+
+/* While a block is open the bar sits in the header's own row, in the room between the tabs and the dock (Toolbar.svelte sets --x and --room).
+   Where that is too little, the tabs give way to the active one; where it is still too little, the bar scrolls with Done pinned. */
+.pg-bar { position: fixed !important; z-index: 17; top: 8px; left: var(--x, 50%); translate: calc(-50% + var(--shift, 0px)) 0; max-width: var(--room, calc(100vw - 40px)); }
+:root.pg-crowd .bar .tb { max-width: 220px; }
+:root.pg-crowd .bar .tb-chip:not(.on, .one) { display: none; }
+.pg-bar.tight [data-cmd='done'] { position: sticky; right: 0; background: var(--paper); }
+@media (max-width: 720px) {
+  .pg-bar { inset-inline: 12px; translate: none; width: auto; max-width: none; }
+  :root:has(.pg-bar:not(.idle)) .bar .tb { visibility: hidden; }
+  .pg-bar.idle { display: none; }
+}
+.pg-slash { position: relative; z-index: 14; width: 280px; max-height: 300px; margin: 4px 0 0; padding: var(--pad); overflow-y: auto; border-radius: var(--r-sheet); corner-shape: squircle; background: var(--paper); box-shadow: var(--float); list-style: none; }
+.pg-slash li { margin: 0; padding: 0; }
+.pg-slash button { position: relative; isolation: isolate; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); width: 100%; min-height: 36px; padding: 0 var(--inset); border-radius: var(--r-group); font: 400 var(--fs-md)/1 var(--sans); color: var(--fg); text-align: left; }
+.pg-slash button::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: currentColor; opacity: 0; transition: opacity var(--t1) var(--out); }
+.pg-slash button:hover::before { opacity: var(--hover); }
+.pg-slash button.on::before { opacity: var(--held); }
+.pg-slash svg { flex: none; width: var(--icon); height: var(--icon); stroke-width: var(--stroke); color: var(--fg-3); }
+.pg-slash button > span { flex: 1; text-align: left; }
+.md .pg-slash kbd { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border: 0; border-radius: var(--r-key); background: var(--well); box-shadow: inset 0 -1px 0 var(--line-2); font: 500 var(--fs-xs)/1 var(--mono); color: var(--fg-2); }
+.desk.page .md { cursor: text; }
+.desk.page .pane.read { cursor: text; }
+.desk.page .made { cursor: default; }

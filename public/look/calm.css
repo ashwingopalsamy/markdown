@@ -1,0 +1,17 @@
+/* Calm: soft stone and umber ink; at night, warm charcoal. Loaded only when chosen. */
+:root[data-palette='calm'] {
+  --page: #eee6d6; --paper: #f5efe3; --well: #e5dccb; --well-2: #ebe3d4;
+  --fg: #45372a; --fg-2: #5a4a3b; --fg-3: #66564a;
+  --line: rgba(69, 55, 42, 0.1); --line-2: rgba(69, 55, 42, 0.18); --glass: rgba(245, 239, 227, 0.86);
+  --lift: 0 1px 2px rgba(69, 55, 42, 0.06), 0 12px 24px -16px rgba(69, 55, 42, 0.18);
+  --float: 0 0 0 1px var(--line), 0 1px 2px rgba(69, 55, 42, 0.06), 0 14px 32px -10px rgba(69, 55, 42, 0.22);
+  --accent: #286266; --danger: #a33a2a; --ok: #3a7346; --wait: #8f5d0a; --thumb: #fbf8f1; --knob: #fbf8f1;
+}
+@media screen {
+  :root[data-palette='calm'][data-theme='dark'] {
+    --page: #1c1a17; --paper: #24211d; --well: #2e2a25; --well-2: #282521; --sunk: #161411;
+    --fg: #e6ddcf; --fg-2: #c8bead; --fg-3: #a39988;
+    --line: rgba(230, 221, 207, 0.1); --line-2: rgba(230, 221, 207, 0.2); --glass: rgba(40, 37, 33, 0.84);
+    --accent: #86bdb9; --danger: #f08a7a; --ok: #7cc49a; --wait: #e8b45a; --thumb: #48443d; --sw-off: #5f5a52;
+  }
+}

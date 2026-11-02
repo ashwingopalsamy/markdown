@@ -1,0 +1,159 @@
+{
+  "allow": [
+    {
+      "file": "_baseFor",
+      "api": "Function(",
+      "max": 1,
+      "reason": "lodash-es finds the global object with Function('return this')() only when neither self nor global exists, which a browser never reaches; the page policy has no unsafe-eval, so it would throw rather than run."
+    },
+    {
+      "file": "chunk-FPAJGGOC",
+      "api": "Function(",
+      "max": 2,
+      "reason": "lodash-es finds the global object with Function('return this')() only when neither self nor global exists, which a browser never reaches; the page policy has no unsafe-eval, so it would throw rather than run."
+    },
+    {
+      "file": "cytoscape.esm",
+      "api": "Function(",
+      "max": 1,
+      "reason": "lodash-es finds the global object with Function('return this')() only when neither self nor global exists, which a browser never reaches; the page policy has no unsafe-eval, so it would throw rather than run."
+    },
+    {
+      "file": "graphql-",
+      "api": "Function(",
+      "max": 12,
+      "reason": "TextMate grammar text for the code highlighter: the word Function appears inside a pattern string, and nothing calls it."
+    },
+    {
+      "file": "javascript-",
+      "api": "Function(",
+      "max": 6,
+      "reason": "TextMate grammar text for the code highlighter: the word Function appears inside a pattern string, and nothing calls it."
+    },
+    {
+      "file": "typescript-",
+      "api": "Function(",
+      "max": 6,
+      "reason": "TextMate grammar text for the code highlighter: the word Function appears inside a pattern string, and nothing calls it."
+    },
+    {
+      "file": "php-",
+      "api": "Function(",
+      "max": 1,
+      "reason": "TextMate grammar text for the code highlighter: the word Function appears inside a pattern string, and nothing calls it."
+    },
+    {
+      "file": "php-",
+      "api": "fetch(",
+      "max": 5,
+      "reason": "TextMate grammar text for the code highlighter: PHP database function names (fetch_row, fetch_assoc) inside a pattern string; nothing calls fetch."
+    },
+    {
+      "file": "katex-",
+      "api": "fetch(",
+      "max": 28,
+      "reason": "KaTeX's parser has a method named fetch (it reads the next token); it is not the network API. Two chunks carry a copy."
+    },
+    {
+      "file": "selftest-",
+      "edition": "hosted",
+      "api": "fetch(",
+      "max": 2,
+      "reason": "The Privacy sheet's self-test: it calls fetch to https://blocked.invalid/ and expects the browser to refuse. The page policy has connect-src 'none', and .invalid never resolves."
+    },
+    {
+      "file": "selftest-",
+      "edition": "local",
+      "api": "fetch(",
+      "max": 2,
+      "reason": "The Privacy sheet's self-test in md Local: it calls fetch to https://blocked.invalid/ and to another port on this machine (127.0.0.1:4873), and expects the browser to refuse both. The page policy is connect-src 'self', which is 127.0.0.1:4874 only."
+    },
+    {
+      "file": "selftest-",
+      "api": "XMLHttpRequest",
+      "max": 2,
+      "reason": "The Privacy sheet's self-test, aimed at https://blocked.invalid/ and expected to be refused."
+    },
+    {
+      "file": "selftest-",
+      "api": "WebSocket",
+      "max": 2,
+      "reason": "The Privacy sheet's self-test, aimed at wss://blocked.invalid/ and expected to be refused."
+    },
+    {
+      "file": "selftest-",
+      "api": "EventSource",
+      "max": 3,
+      "reason": "The Privacy sheet's self-test, aimed at https://blocked.invalid/ and expected to be refused."
+    },
+    {
+      "file": "selftest-",
+      "api": "sendBeacon",
+      "max": 3,
+      "reason": "The Privacy sheet's self-test, aimed at https://blocked.invalid/ and expected to be refused."
+    },
+    {
+      "file": "selftest-",
+      "api": "Function(",
+      "max": 1,
+      "reason": "The Privacy sheet's self-test: it tries Function('return 1')() and expects the policy to refuse it."
+    },
+    {
+      "file": "server-",
+      "edition": "local",
+      "api": "fetch(",
+      "max": 1,
+      "reason": "md Local's one API helper (store/server.ts): every call to its own server goes through it, with the capability. The page policy is connect-src 'self'."
+    },
+    {
+      "file": "probe",
+      "api": "fetch(",
+      "max": 1,
+      "reason": "The Privacy sheet's engine check (public/engine/probe.js): a sandboxed frame with the engines' policy, connect-src 'none', tries to fetch md's own /trust.json and https://probe.invalid/ and reports that the browser refused both."
+    },
+    {
+      "file": "sw.js",
+      "edition": "hosted",
+      "api": "fetch(",
+      "max": 4,
+      "reason": "The offline worker fetches this site's own files while it installs, passes a request through for a file it does not hold, and fetches a serif face the first time it is used so it can keep it. Its policy is connect-src 'self'."
+    },
+    {
+      "file": "viz-global",
+      "api": "fetch(",
+      "max": 1,
+      "reason": "Viz.js (Graphviz layout, bundled in @plantuml/core) runs only in the sandboxed PlantUML frame, whose policy is connect-src 'none' (docs/local.md, Diagram engines): its loader code for fetching the WebAssembly is never reached, because the module is embedded in the file."
+    },
+    {
+      "file": "viz-global",
+      "api": "XMLHttpRequest",
+      "max": 2,
+      "reason": "Viz.js (Graphviz layout, bundled in @plantuml/core) runs only in the sandboxed PlantUML frame, whose policy is connect-src 'none' (docs/local.md, Diagram engines): its loader code for fetching the WebAssembly is never reached, because the module is embedded in the file."
+    },
+    {
+      "file": "viz-global",
+      "api": "WebAssembly",
+      "max": 2,
+      "reason": "Viz.js (Graphviz layout, bundled in @plantuml/core) compiles its embedded WebAssembly in the sandboxed PlantUML frame only, which allows 'wasm-unsafe-eval' and nothing else (docs/local.md, Diagram engines)."
+    },
+    {
+      "file": "viewer-static",
+      "api": "fetch(",
+      "max": 2,
+      "reason": "The draw.io viewer fetches label pictures and proxied data sources. It runs only in the sandboxed draw.io frame, whose policy is connect-src 'none' and img-src data: (docs/local.md, Diagram engines), so neither call can leave the frame."
+    },
+    {
+      "file": "viewer-static",
+      "api": "XMLHttpRequest",
+      "max": 5,
+      "reason": "The draw.io viewer loads stencil sets, styles and proxied files with XMLHttpRequest. It runs only in the sandboxed draw.io frame, whose policy is connect-src 'none' (docs/local.md, Diagram engines); the page fetches the stencil sets itself and passes them in."
+    },
+    {
+      "file": "viewer-static",
+      "api": "eval(",
+      "max": 7,
+      "reason": "The draw.io viewer evaluates function text in stencils and style sheets (mxUtils.eval). The sandboxed draw.io frame allows no unsafe-eval, and the frame replaces mxUtils.eval with a function that returns null, so none of it runs."
+    }
+
+  ]
+}

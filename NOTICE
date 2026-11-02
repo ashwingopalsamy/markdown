@@ -1,0 +1,33 @@
+md
+Copyright (c) 2026 Ashwin Gopalsamy. MIT licence, see LICENSE.
+
+The syntax and feature set of md, and the architecture of a Markdown editor that runs in the browser, were studied from
+ThisIs-Developer/Markdown-Viewer (Apache License 2.0), https://github.com/ThisIs-Developer/Markdown-Viewer.
+No code was copied from it.
+
+md ships third-party packages under their own licences. Their names, versions and licences are listed in dist/trust.json,
+written by `npm run build`, and the packages' licence files are in their own folders under node_modules/. The fonts in
+public/fonts are Inter, JetBrains Mono, Literata and Newsreader, used under the SIL Open Font License; the licence text is public/fonts/OFL.txt.
+
+md Local draws PlantUML diagrams with @plantuml/core (https://plantuml.com), MIT licence, Copyright (C) 2009-2024 Arnaud Roques.
+Its licence text is node_modules/@plantuml/core/LICENSE. It bundles Viz.js (MIT, Copyright (c) Michael Daines), which contains Graphviz
+and Expat. The C4 bundle in vendor/plantuml/ is C4-PlantUML 2.14.0 (MIT, Ricardo Niepel, kirchsth and contributors),
+https://github.com/plantuml-stdlib/C4-PlantUML. These files ship in both editions, under /engine/, and load only when a document has such a diagram.
+
+md Local draws draw.io diagrams with the draw.io viewer (viewer-static.min.js) from https://github.com/jgraph/drawio, release v32.6.9,
+Apache License 2.0. Its licence text is the LICENSE file of that repository. The viewer includes mxGraph and other libraries that the project
+states are all compatible with Apache 2.0. The stencil sets in vendor/drawio/stencils/ (aws4, azure, basic,
+bpmn, cisco19, flowchart, gcp2, kubernetes) come from the same project's viewer and carry its stencil licence (src/main/webapp/stencils/LICENSE), which says:
+"The icon sets and stencil libraries included in this software, and any derivatives thereof (including conversions to other formats, traced reproductions,
+substantially similar visual representations, or AI-generated images created using these icons as reference or training input), may not be used as
+software assets in, distributed for use with, or incorporated into Atlassian products or products distributed through the Atlassian marketplace or plugin
+ecosystem, without explicit written permission. This restriction does not apply to end-user diagram output (such as exported images or documents)
+created using this software." md is not an Atlassian product and must not be used as a software asset in one. These files ship in both editions, under /engine/, and load only when a document has such a diagram.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of PlantUML and its associated files (the "Software"),
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, subject to the above copyright notice and this permission notice being included in all
+copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
