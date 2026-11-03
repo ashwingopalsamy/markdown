@@ -17,20 +17,37 @@
     <!--home-->
     <div id="home">
       <svg class="sprite" aria-hidden="true" focusable="false">
-        <symbol id="v-y" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="currentColor"/><path d="m5.4 9.2 2.4 2.4 4.8-5" fill="none" stroke="var(--page)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-        <symbol id="v-p" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 1.8a7.2 7.2 0 0 0 0 14.4Z" fill="currentColor"/></symbol>
-        <symbol id="v-n" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m6.4 6.4 5.2 5.2M11.6 6.4l-5.2 5.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-        <symbol id="v-u" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.2 2.2"/><path d="M7.2 7.2a1.9 1.9 0 1 1 2.6 1.8c-.5.3-.8.6-.8 1.2M9 12.6v.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+        <symbol id="rose" viewBox="0 0 18 18"><path d="M9 .8 9.5 .9 10 1.2 10.5 1.6 10.9 2 11.3 2.3 11.7 2.5 12.1 2.7 12.6 2.7 13.2 2.7 13.8 2.7 14.4 2.9 14.8 3.2 15.1 3.6 15.3 4.2 15.3 4.8 15.3 5.4 15.3 5.9 15.4 6.3 15.7 6.7 16 7.1 16.4 7.5 16.8 8 17.1 8.5 17.2 9 17.1 9.5 16.8 10 16.4 10.5 16 10.9 15.7 11.3 15.4 11.7 15.3 12.1 15.3 12.6 15.3 13.2 15.3 13.8 15.1 14.4 14.8 14.8 14.4 15.1 13.8 15.3 13.2 15.3 12.6 15.3 12.1 15.3 11.7 15.4 11.3 15.7 10.9 16 10.5 16.4 10 16.8 9.5 17.1 9 17.2 8.5 17.1 8 16.8 7.5 16.4 7.1 16 6.7 15.7 6.3 15.4 5.9 15.3 5.4 15.3 4.8 15.3 4.2 15.3 3.6 15.1 3.2 14.8 2.9 14.4 2.7 13.8 2.7 13.2 2.7 12.7 2.7 12.1 2.5 11.7 2.3 11.3 2 10.9 1.6 10.5 1.2 10 .9 9.5 .8 9 .9 8.5 1.2 8 1.6 7.5 2 7.1 2.3 6.7 2.5 6.3 2.7 5.9 2.7 5.3 2.7 4.8 2.7 4.2 2.9 3.6 3.2 3.2 3.6 2.9 4.2 2.7 4.8 2.7 5.3 2.7 5.9 2.7 6.3 2.5 6.7 2.3 7.1 2 7.5 1.6 8 1.2 8.5 .9Z"/></symbol>
+        <symbol id="v-y" viewBox="0 0 18 18"><use href="#rose" fill="var(--tick)"/><path d="m5.7 9.3 2.2 2.2 4.4-4.7" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="v-p" viewBox="0 0 18 18"><use href="#rose" fill="var(--part)"/><path d="m5.7 9.3 2.2 2.2 4.4-4.7" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="v-n" viewBox="0 0 18 18"><path d="M5.5 9h7" fill="none" stroke="var(--fg-3)" stroke-width="1.8" stroke-linecap="round" opacity=".8"/></symbol>
+        <symbol id="v-u" viewBox="0 0 18 18"><path d="M6.8 9h4.4" fill="none" stroke="var(--fg-3)" stroke-width="1.8" stroke-linecap="round" opacity=".42"/></symbol>
+        <symbol id="v-s" viewBox="0 0 12 12"><path d="M6 .5c.35 2.6 2.4 4.65 5 5-2.6.35-4.65 2.4-5 5-.35-2.6-2.4-4.65-5-5 2.6-.35 4.65-2.4 5-5Z" fill="currentColor"/></symbol>
+        <symbol id="mark" viewBox="0 0 40 48"><rect width="40" height="48" rx="10" fill="#1d1d1f"/><circle cx="12" cy="11" r="3.6" fill="#4cc38a"/><g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 35V23l7 8 7-8v12"/><path d="M30 23v12M25.5 30.5 30 35l4.5-4.5"/></g></symbol>
+        <symbol id="ar" viewBox="0 0 30 12"><path d="M1 6h27m-5-5 5 5-5 5"/></symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.6c-.4 0-.8-.15-1.1-.4C6.1 16.2 3 13.3 3 9.3 3 6.4 5.2 4.2 8 4.2c1.6 0 3 .8 4 2.1 1-1.3 2.4-2.1 4-2.1 2.8 0 5 2.2 5 5.1 0 4-3.1 6.9-7.9 10.9-.3.25-.7.4-1.1.4Z"/></symbol>
         <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.4 3.6a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
         <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5Z"/></symbol>
         <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
         <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
-        <symbol id="i-dot" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></symbol>
+        <symbol id="i-page" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h5"/></symbol>
+        <symbol id="i-diagram" viewBox="0 0 24 24"><path d="M3 3h6v6H3ZM15 15h6v6h-6ZM6 9v3a3 3 0 0 0 3 3h6"/></symbol>
+        <symbol id="i-export" viewBox="0 0 24 24"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5M20 15v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"/></symbol>
+        <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 10-10c0 2.2-1.8 3.5-4 3.5h-2a2 2 0 0 0-1.5 3.3c.4.5.5 1 .5 1.5 0 1-.9 1.7-3 1.7ZM7.5 10.5h.01M12 7.5h.01M16.5 10.5h.01"/></symbol>
+        <symbol id="i-find" viewBox="0 0 24 24"><path d="M20 20l-3.6-3.6M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></symbol>
+        <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.2h7a2 2 0 0 1 2 2v7.8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2Z"/></symbol>
+        <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1ZM9 12l2 2 4-4"/></symbol>
+        <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+        <symbol id="i-compare" viewBox="0 0 24 24"><path d="M18 15a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM6 3a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13 6h3a2 2 0 0 1 2 2v7M11 18H8a2 2 0 0 1-2-2V9"/></symbol>
+        <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8M6 8h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2ZM2 14h2M20 14h2M15 13v2M9 13v2"/></symbol>
+        <symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></symbol>
+        <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4M9 18c-4.51 2-5-2-7-2"/></symbol>
       </svg>
 
       <header class="bar">
         <div class="inner">
-          <a class="pill name" href="/" aria-label="md"><svg class="mk" viewBox="0 0 40 48" aria-hidden="true"><rect width="40" height="48" rx="10" fill="#1d1d1f"/><circle cx="12" cy="11" r="3.6" fill="#4cc38a"/><g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 35V23l7 8 7-8v12"/><path d="M30 23v12M25.5 30.5 30 35l4.5-4.5"/></g></svg>md</a>
+          <a class="pill name" href="/" aria-label="md"><svg class="mk" aria-hidden="true"><use href="#mark"/></svg>md</a>
           <div class="pill tools">
             <button class="icon demo" type="button" data-act="demo"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>{{header.demo}}</button>
             <button class="icon swap" type="button" data-theme-toggle aria-label="Switch theme">
@@ -41,83 +58,127 @@
       </header>
 
       <main>
-        <section class="hero" aria-labelledby="h1">
-          <svg class="logo" viewBox="0 0 40 48" aria-hidden="true"><rect width="40" height="48" rx="10" fill="#1d1d1f"/><circle cx="12" cy="11" r="3.6" fill="#4cc38a"/><g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 35V23l7 8 7-8v12"/><path d="M30 23v12M25.5 30.5 30 35l4.5-4.5"/></g></svg>
-          <h1 id="h1">{{hero.h1}}</h1>
-          <p class="lede">{{hero.lede}}</p>
-          <div class="cta">
-            <button class="ask solid" type="button" data-act="start"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>{{hero.start}}</button>
-            <button class="ask plain" type="button" data-act="demo"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>{{hero.demo}}</button>
-          </div>
-          <p class="hint">{{hero.hint}}</p>
-        </section>
-
-        <section class="wrap sec reveal" id="compared" aria-labelledby="h-compared">
-          <p class="k">{{compared.eyebrow}}</p>
-          <h2 id="h-compared">{{compared.h2}}</h2>
-          <p class="lede">{{compared.intro}}</p>
-          {{@compare}}
-          <div class="card notfor">
-            <h3>{{compared.notForTitle}}</h3>
-            <ul>{{@notfor}}</ul>
-          </div>
-        </section>
-
-        <section class="wrap sec reveal" id="privacy" aria-labelledby="h-privacy">
-          <div class="split">
-            <div>
-              <p class="k">{{privacy.eyebrow}}</p>
-              <h2 id="h-privacy">{{privacy.h2}}</h2>
-              <p class="lede">{{privacy.body}}</p>
-              <h3 class="sub">{{privacy.offlineTitle}}</h3>
-              <p class="plain-p">{{privacy.offline}}</p>
+        <section class="first" aria-labelledby="h1">
+          <div class="hero">
+            <svg class="logo" aria-hidden="true"><use href="#mark"/></svg>
+            <h1 id="h1">{{hero.h1}}</h1>
+            <p class="lede">{{hero.lede}}</p>
+            <div class="cta">
+              <button class="ask solid" type="button" data-act="start"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>{{hero.start}}</button>
+              <button class="ask plain" type="button" data-act="demo"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>{{hero.demo}}</button>
             </div>
-            <div class="stack">
-              <div class="card stat"><b>{{privacy.stat}}</b><span>{{privacy.statLabel}}</span><small>{{privacy.statCaption}}</small></div>
-              <div class="card">
-                <h3>{{privacy.checkTitle}}</h3>
-                <ol class="steps">{{@check}}</ol>
+            <p class="hint">{{hero.hint}}</p>
+          </div>
+          <a class="next" href="#how"><span>{{hero.how}}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 3.5 3.5 3.5 3.5-3.5"/><path d="m4.5 8.5 3.5 3.5 3.5-3.5"/></svg></a>
+        </section>
+
+        <div id="how">
+          <section class="wrap sec split reveal" id="compared" aria-labelledby="h-compared">
+            <div class="txt">
+              <p class="k">{{compared.eyebrow}}</p>
+              <h2 id="h-compared">{{compared.h2}}</h2>
+              <p class="lede">{{compared.intro}}</p>
+            </div>
+            <div class="art">{{@jobs}}</div>
+          </section>
+
+          <div class="wrap tail reveal">
+            {{@proof}}
+            {{@teaser}}
+            <details class="full" id="table">
+              <summary class="ask plain"><span class="o">{{compared.open}}</span><span class="c">{{compared.close}}</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              {{@compare}}
+            </details>
+            <div class="card notfor">
+              <h3>{{compared.notForTitle}}</h3>
+              <ul>{{@notfor}}</ul>
+            </div>
+          </div>
+
+          <section class="wrap sec reveal" id="rendering" aria-labelledby="h-rendering">
+            <header class="sh">
+              <div>
+                <p class="k">{{demos.eyebrow}}</p>
+                <h2 id="h-rendering">{{demos.h2}}</h2>
+                <p class="lede">{{demos.intro}}</p>
+              </div>
+            </header>
+            {{@demos}}
+          </section>
+
+          <section class="wrap sec reveal" id="privacy" aria-labelledby="h-privacy">
+            <header class="sh">
+              <div>
+                <p class="k">{{privacy.eyebrow}}</p>
+                <h2 id="h-privacy">{{privacy.h2}}</h2>
+                <p class="lede">{{privacy.body}}</p>
+              </div>
+              <p class="aside">{{privacy.aside}}</p>
+            </header>
+            {{@routes}}
+            <div class="trio">
+              <figure class="sheet" role="img" aria-label="{{privacy.sheet}}">
+                <div class="tally"><b>{{privacy.stat}}</b><span>{{privacy.statLabel}}</span></div>
+                <dl>{{@sheet}}</dl>
+                <figcaption>{{privacy.statCaption}}</figcaption>
+              </figure>
+              <div id="offline">
+                <h3>{{privacy.offlineTitle}}</h3>
+                <p>{{privacy.offline}}</p>
                 <p class="note">{{privacy.checkNote}}</p>
-                <a class="more" href="/trust/">{{privacy.trust}}</a>
+              </div>
+              <div>
+                <h3>{{privacy.checkTitle}}</h3>
+                <ol>{{@check}}</ol>
+                <p class="go"><a href="/trust/">{{privacy.trust}}</a></p>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section class="wrap sec reveal" id="inside" aria-labelledby="h-inside">
-          <p class="k">{{inside.eyebrow}}</p>
-          <h2 id="h-inside">{{inside.h2}}</h2>
-          <ul class="tiles">{{@tiles}}</ul>
-          <ul class="keys">{{@keys}}</ul>
-        </section>
+          <section class="wrap sec reveal" id="inside" aria-labelledby="h-inside">
+            <header class="sh">
+              <div>
+                <p class="k">{{inside.eyebrow}}</p>
+                <h2 id="h-inside">{{inside.h2}}</h2>
+              </div>
+            </header>
+            <ul class="tiles">{{@tiles}}</ul>
+            <ul class="keystrip">{{@keys}}</ul>
+          </section>
 
-        <section class="wrap sec reveal" id="faq" aria-labelledby="h-faq">
-          <p class="k">{{faq.eyebrow}}</p>
-          <h2 id="h-faq">{{faq.h2}}</h2>
-          <div class="faq">{{@faq}}</div>
-        </section>
+          <section class="wrap sec reveal" id="faq" aria-labelledby="h-faq">
+            <header class="sh">
+              <div>
+                <p class="k">{{faq.eyebrow}}</p>
+                <h2 id="h-faq">{{faq.h2}}</h2>
+              </div>
+            </header>
+            <div class="faq">{{@faq}}</div>
+          </section>
 
-        <section class="wrap reveal">
-          <div class="close">
-            <div>
-              <h2>{{closing.h2}}</h2>
-              <p>{{closing.sub}}</p>
+          <section class="wrap reveal">
+            <div class="close">
+              <div>
+                <h2>{{closing.h2}}</h2>
+                <p>{{closing.sub}}</p>
+              </div>
+              <div class="acts">
+                <button class="ask solid" type="button" data-act="start"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>{{closing.start}}</button>
+                <button class="ask plain" type="button" data-act="demo"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>{{closing.demo}}</button>
+                <a class="ask quiet" href="#compared">{{closing.more}}</a>
+              </div>
             </div>
-            <div class="acts">
-              <button class="ask solid" type="button" data-act="start"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>{{closing.start}}</button>
-              <button class="ask plain" type="button" data-act="demo"><svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>{{closing.demo}}</button>
-            </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
 
-      <footer class="foot wrap">
-        <p>{{footer.line}}</p>
-        <p>{{footer.source}}</p>
-        <nav aria-label="More">{{@links}}</nav>
+      <footer class="foot">
+        <span class="give"><svg class="ic" aria-hidden="true"><use href="#i-github"/></svg>{{footer.source}}</span>
+        <nav class="links" aria-label="More">{{@links}}</nav>
+        <p class="by"><img src="{{@avatar}}" width="22" height="22" alt="" decoding="async" /><span class="line">{{footer.love}}<svg class="heart" aria-hidden="true"><use href="#i-heart"/></svg><b>{{footer.author}}</b></span><span>{{footer.site}}</span><span>{{footer.licence}}</span></p>
       </footer>
 
-      <div class="droop" aria-hidden="true"><span>{{hero.drop}}</span></div>
+      <div class="droop" aria-hidden="true"><span><svg class="tray" viewBox="0 0 24 24"><path class="arr" d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/><path d="M5 15v3.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>{{hero.drop}}</span></div>
     </div>
     <!--/home-->
     <div id="app"></div>

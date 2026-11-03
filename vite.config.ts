@@ -6,14 +6,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { marked } from 'marked'
 import { defineConfig, type Plugin } from 'vite'
 import { engineFiles } from './tools/engine.mjs'
-import { homeMd, meta as homeMeta, withHome, withoutHome } from './tools/home.ts'
+import { BUDGET, homeMd, meta as homeMeta, withHome, withoutHome } from './tools/home.ts'
 import { ENGINE_POLICY, GUIDE_META, GUIDE_POLICY, LOCAL_META_POLICY, LOCAL_PAGE_POLICY, META_POLICY, META_TAGS, ORIGIN, PAGE_POLICY, SW_POLICY } from './tools/policy.mjs'
 
 // Files the offline copy leaves out: source maps, the worker itself, and files that are not served as files.
 const SKIP = /\.map$|^(?:sw\.js|_headers|404\.html)$/
 // dist/trust.json is written after the build by tools/audit.mjs, so it is named here rather than found.
 const LATE = ['trust.json']
-const BUDGET = 45_000
 // Kept on this device the first time they are used, not at install: the two serif faces. The diagram engines are in neither list: they are not kept
 // for offline use (a sandboxed frame does not go through the worker), and 20 MB is too much to put in the copy.
 const ONUSE = /^fonts\/(?:literata|newsreader)/

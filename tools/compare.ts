@@ -4,7 +4,8 @@ import { checked, groups, rows, tools } from '../site/compare.ts'
 import type { Cell, Row, Verdict } from './compare/types.ts'
 
 const VERDICTS: Verdict[] = ['yes', 'part', 'no', 'unknown']
-const WORDS: Record<Verdict, string> = { yes: 'Yes', part: 'Partly', no: 'No', unknown: 'Not stated' }
+export const WORDS: Record<Verdict, string> = { yes: 'Yes', part: 'Partly', no: 'No', unknown: 'Not stated' }
+// the symbols are in index.html's sprite: a blue seal, a grey seal, a dash, a fainter dash
 const SYMBOL: Record<Verdict, string> = { yes: 'v-y', part: 'v-p', no: 'v-n', unknown: 'v-u' }
 
 export const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -32,20 +33,26 @@ const where = (url: string) => {
   const u = new URL(url)
   return `${u.hostname.replace(/^www\./, '')}${u.pathname === '/' ? '' : u.pathname.replace(/\/$/, '')}${u.search}`
 }
+export const onlyHere = (r: Row) => r.cells.us.v === 'yes' && Object.entries(r.cells).every(([id, c]) => id === 'us' || c.v !== 'yes')
 const same = (r: Row) => Object.values(r.cells).every((c) => c.v === r.cells.us.v)
 const cls = (id: string) => (id === 'us' ? ' class="us"' : '')
 
-const glyph = (v: Verdict) => `<svg class="g ${SYMBOL[v]}" aria-hidden="true"><use href="#${SYMBOL[v]}"/></svg><span class="vh">${WORDS[v]}: </span>`
+const SPARK = '<svg class="g v-s" aria-hidden="true"><use href="#v-s"/></svg>'
+export const glyph = (v: Verdict) => `<svg class="g ${SYMBOL[v]}" aria-hidden="true"><use href="#${SYMBOL[v]}"/></svg><span class="vh">${WORDS[v]}: </span>`
 
 /** The comparison as a table with its controls, for the landing page. */
 export function compareHtml(): string {
   checkCompare()
-  const chip = (id: string, name: string, n: number) => `<label class="chip"><input type="radio" name="grp" id="g-${id}"${id === 'all' ? ' checked' : ''}>${esc(name)} <em>${n}</em></label>`
-  const chips = [chip('all', 'All', rows.length), ...groups.map((g) => chip(g.id, g.name, rows.filter((r) => r.group === g.id).length))].join('')
+  const chip = (id: string, name: string, n: number, only = false) =>
+    `<label class="chip${only ? ' only' : ''}"><input type="radio" name="grp" id="g-${id}"${id === 'all' ? ' checked' : ''}>${only ? SPARK : ''}${esc(name)} <em>${n}</em></label>`
+  // a row where md says yes and no other tool does; the chip, the caption and the legend entry appear when there is one
+  const alone = rows.filter(onlyHere).length
+  const chips = [chip('all', 'All', rows.length), ...groups.map((g) => chip(g.id, g.name, rows.filter((r) => r.group === g.id).length)), ...(alone ? [chip('only', 'Only here', alone, true)] : [])].join('')
   const head = `<tr><th class="lab" scope="col"><span class="vh">What was checked</span></th>${tools.map((t) => `<th scope="col"${cls(t.id)}>${esc(t.name)}<small>${t.job}</small></th>`).join('')}</tr>`
   const body = rows
     .map((r) => {
-      const f = `g-${r.group}${same(r) ? ' same' : ''}`
+      const f = `g-${r.group}${onlyHere(r) ? ' g-only' : ''}${same(r) ? ' same' : ''}`
+      const note = onlyHere(r) ? `<small class="oh">${SPARK}Only here</small>` : ''
       const cells = tools.map((t) => `<td${cls(t.id)}><span class="v">${glyph(r.cells[t.id].v)}${esc(r.cells[t.id].say)}</span></td>`).join('')
       const notes = tools
         .map((t) => {
@@ -53,10 +60,10 @@ export function compareHtml(): string {
           return `<td${cls(t.id)}>${c.more ? `${esc(c.more)} ` : ''}<span class="src">${esc(where(c.src))}</span></td>`
         })
         .join('')
-      return `<tr class="${f}"><th scope="row">${esc(r.label)}</th>${cells}</tr><tr class="${f} more"><td></td>${notes}</tr>`
+      return `<tr class="${f}"><th scope="row">${esc(r.label)}${note}</th>${cells}</tr><tr class="${f} more"><td></td>${notes}</tr>`
     })
     .join('')
-  const key = VERDICTS.map((v) => `<span class="key" aria-hidden="true">${glyph(v).replace(/<span class="vh">.*$/, '')}${WORDS[v]}</span>`).join('')
+  const key = [...VERDICTS.map((v) => `<span class="key" aria-hidden="true">${glyph(v).replace(/<span class="vh">.*$/, '')}${WORDS[v]}</span>`), ...(alone ? [`<span class="key" aria-hidden="true">${SPARK}Only here</span>`] : [])].join('')
   return `<div class="mxw">
 <div class="ctl"><fieldset><legend class="vh">Show</legend>${chips}</fieldset>
 <label class="sw"><input type="checkbox" id="mx-diff"><i aria-hidden="true"></i>Only differences</label>

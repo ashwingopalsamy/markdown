@@ -5,13 +5,15 @@ description: Write Markdown on the rendered page, with Mermaid, PlantUML and dra
 
 # md
 
-Markdown, written and read in one place. Write on the page as it will be read, or in plain Markdown beside it, with diagrams, math and code drawn as you type. The page cannot make a request, so your text stays on this device.
+Markdown, written and read in one place. Write on the page as it will read, or in plain Markdown beside it. Diagrams, math and code draw as you type, and your text never leaves this device: the page can't make a request.
 
 md is a free, open source (MIT) web page at https://md.ashwingopalsamy.in/. Start writing, try the demo (the tour, which Clear deletes again), or drop a `.md` file anywhere on the page. It works offline after the first visit.
 
 ## Compared
 
-Seven ways to write Markdown. Typora and Obsidian are apps that keep files on your disk. StackEdit and Dillinger keep drafts in your browser, and send them to a server to sync and for some exports. HackMD keeps notes on its servers so people can write together, and VS Code shows Markdown beside its source. md runs in your browser: nothing to install, no account, and a page that cannot send your text anywhere. Every answer names the tool's own page, checked in November 2026.
+Seven ways to write Markdown. Typora, Obsidian and VS Code keep files on your disk. StackEdit and Dillinger keep drafts in the browser, and use a server to sync and for some exports. HackMD keeps notes on its servers. md runs in your browser: nothing to install, no account, and a page that cannot send your text anywhere. Every answer names the tool's own page, checked in November 2026.
+
+md writes on the page or in Markdown, in this tab. It draws diagrams, math and code on your device, and keeps documents in this browser and in files you choose. Four facts: 0 requests to anywhere else since the page opened; 0 accounts; a first screen of at most <!--budget--> gzipped, which the build enforces; and it works offline after the first visit.
 
 <!--compare-->
 
@@ -35,7 +37,11 @@ Check it yourself:
 3. Switch the wifi off and reload. md still opens.
 4. Open the shield and press Try to break out. Every attempt is refused.
 
-A typeface you choose, and the PlantUML and draw.io engines, come from md's site the first time a page needs them. Your text never goes the other way. [Trust and network notes](trust/index.md) has the exact policy and how to check each claim.
+A typeface you choose, and the PlantUML and draw.io engines, come from md's site the first time a page needs them. Your text never goes the other way. In md a document goes from your text to md in this tab and stays on this device. Typora, Obsidian and VS Code keep it in your files; StackEdit and Dillinger keep it in the browser until you sync or export; HackMD keeps it on its servers. [Trust and network notes](trust/index.md) has the exact policy and how to check each claim.
+
+## Plain text in, a page out
+
+The same text, as plain Markdown and as md draws it: a table (rows and columns line up, a column can sit on the right), a Mermaid diagram (drawn on your device), and math (set as you type, with no image and no request).
 
 ## What's inside
 

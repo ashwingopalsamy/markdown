@@ -77,13 +77,23 @@ addEventListener(
   { signal },
 )
 
-// Sections fade in as they come into view, unless the person asked for less motion (theme.js sets .js, which is what hides them).
+// Sections settle in as they scroll into view. Where the browser has scroll timelines home.css does it with no script; elsewhere each section
+// is shown as it arrives (theme.js sets .js, which is what hides them first), and at once for anyone who asked for less motion.
 const sections = document.querySelectorAll('#home .reveal')
 if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) sections.forEach((s) => s.classList.add('in'))
-else {
+else if (!CSS.supports('animation-timeline: view()')) {
   const seen = new IntersectionObserver((list) => list.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), seen.unobserve(e.target))), { rootMargin: '0px 0px -8% 0px' })
   sections.forEach((s) => seen.observe(s))
 }
+
+// The table sits behind a pill; the card above it, and a link to #table, open it. Without script the pill still opens it.
+const table = document.getElementById('table') as HTMLDetailsElement | null
+const showTable = () => {
+  if (table) table.open = true
+}
+document.querySelector('[data-open=table]')?.addEventListener('click', showTable, { signal })
+addEventListener('hashchange', () => location.hash === '#table' && showTable(), { signal })
+if (location.hash === '#table') showTable()
 
 export const enter = () => {
   if (import.meta.env.PROD) navigator.serviceWorker?.register('/sw.js').catch(() => {})
