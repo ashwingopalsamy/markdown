@@ -9,6 +9,9 @@
   if (s.width && /^[\w-]{1,12}$/.test(s.width)) d.dataset.width = s.width;
   // the rest is the app page's; the guide pages keep their own look
   if (!/^\/(?:index\.html)?$/.test(location.pathname)) return;
+  // the landing page's own: .js lets its sections fade in, and a link that carries a document skips the page at once
+  d.classList.add('js');
+  if (/[#&]md=/.test(location.hash)) d.classList.add('opening');
   if (/^(?:90|110|125|140)$/.test(s.text)) d.style.setProperty('--text', s.text / 100);
   [['palette', /^(?:paper|calm)$/], ['face', /^(?:literata|newsreader)$/]].forEach(function (p) {
     if (!p[1].test(s[p[0]])) return;

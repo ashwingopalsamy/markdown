@@ -2,7 +2,7 @@
 
 **A Markdown editor that keeps your document on your device.**
 
-It runs in the browser. The page cannot make a request, so a document has nowhere to go. It works offline after the first visit, and the same files run on `127.0.0.1`.
+It runs in the browser. The page cannot make a request, so a document has nowhere to go. It works offline after the first visit, and the same files run on `127.0.0.1`. The hosted site opens on a landing page with a sourced comparison (`site/compare.ts`) and a demo; md Local opens straight into the editor.
 
 [md Local](#md-local) is a second edition, for the files on one machine. It has its own rules, written below.
 

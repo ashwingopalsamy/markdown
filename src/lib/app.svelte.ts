@@ -40,6 +40,9 @@ class Tabs {
   list = $state.raw<Doc[]>([]);
 }
 export const tabs = new Tabs();
+/** Settles when boot() has put the first document on the page; the landing page waits for it before opening a file or the demo. */
+let settled: () => void;
+export const booted = new Promise<void>((r) => (settled = r));
 
 // md Local's side, loaded by boot() and only in that build (docs/local.md). Hosted never imports it, so every use below is removed from its bundle.
 let L: typeof import('./local/sync.svelte') | undefined;
@@ -107,6 +110,36 @@ export async function openTour() {
   const { default: text } = await import('./tour.md?raw');
   return openText('tour.md', text);
 }
+/** The tour as a demo (the landing page's "Try the demo"): a tab that Clear, or closing it, deletes again. */
+export async function openDemo() {
+  if (__LOCAL__) return;
+  const { default: text } = await import('./tour.md?raw');
+  const id = await openText('tour.md', text);
+  const demo = tabs.list.find((x) => x.id === id);
+  if (!demo) return;
+  demo.demo = true;
+  await docs.put(demo);
+  bump();
+}
+export const isDemo = () => (void app.rev, !__LOCAL__ && !!current()?.demo);
+/** Deletes the demo from this device, leaving no copy and no snapshot. `landing`: closing the last tab goes back to the landing page. */
+async function dropDemo(d: Doc, landing: boolean) {
+  const at = tabs.list.indexOf(d);
+  const rest = tabs.list.filter((x) => x !== d);
+  edits.delete(d.id);
+  editor?.drop(d.id);
+  set(rest);
+  await docs.remove(d.id);
+  if (!rest.length) {
+    if (landing) return void location.assign(location.pathname);
+    await fresh();
+  } else if (app.active === d.id) activate(rest[Math.min(at, rest.length - 1)].id);
+  bump();
+}
+export const clearDemo = async () => {
+  const d = current();
+  if (d?.demo) await dropDemo(d, false);
+};
 export const pageTitle = (d: Doc) => `${L!.count()}${title(d)} · md`;
 /** A tab with a change nobody has looked at. */
 export const unread = (d: Doc) => L!.unread(d.id);
@@ -161,6 +194,8 @@ function changed(text: string) {
   d.text = text;
   d.updated = Date.now();
   edits.add(d.id);
+  // typing into the demo makes it the person's own document
+  if (d.demo) delete d.demo;
   if (__LOCAL__ && d.source) L!.edited(d);
   if (!saveTimer) saveTimer = window.setTimeout(flush, 400);
   if (Date.now() - lastSnap > SNAP_EVERY) {
@@ -336,6 +371,7 @@ export async function closeTab(id: string) {
   if (!d) return;
   flush();
   if (__LOCAL__ && d.source) return L!.close(d);
+  if (!__LOCAL__ && d.demo) return dropDemo(d, true);
   const at = tabs.list.indexOf(d);
   const rest = tabs.list.filter((x) => x !== d);
   d.open = false;
@@ -346,6 +382,8 @@ export async function closeTab(id: string) {
     await docs.put(d);
   }
   set(rest);
+  // the last tab closed: back to the landing page (md Local has none and keeps its empty window)
+  if (!rest.length && !__LOCAL__) return void location.assign(location.pathname);
   if (!rest.length) await fresh();
   else if (app.active === id) activate(rest[Math.min(at, rest.length - 1)].id);
 }
@@ -432,10 +470,11 @@ export async function openPicked() {
 }
 
 const TEXTY = /\.(?:md|markdown|mdx|mdown|txt)$/i;
-export async function openFiles(files: Iterable<File>, items?: DataTransferItemList) {
+/** `items` are a drop's items, or the handles the landing page already asked them for (they cannot be asked once the drop event is over). */
+export async function openFiles(files: Iterable<File>, items?: DataTransferItemList | Map<string, FileSystemFileHandle>) {
   if (__LOCAL__) return void say('Open files with md <file> in a terminal.');
-  const handles = new Map<string, FileSystemFileHandle>();
-  const pending = [...(items ?? [])].filter((i) => i.kind === 'file');
+  const handles = items instanceof Map ? items : new Map<string, FileSystemFileHandle>();
+  const pending = items instanceof Map ? [] : [...(items ?? [])].filter((i) => i.kind === 'file');
   if ('getAsFileSystemHandle' in DataTransferItem.prototype)
     await Promise.all(
       pending.map(async (i) => {
@@ -569,7 +608,8 @@ function hold(who: 'editor' | 'preview') {
 }
 
 /** Starts the page: documents first, then the editor and the renderer as they arrive. */
-export async function boot(editorHost: () => HTMLElement | undefined, previewRoot: () => HTMLElement | undefined) {
+export const boot = (editorHost: () => HTMLElement | undefined, previewRoot: () => HTMLElement | undefined) => start(editorHost, previewRoot).finally(settled);
+async function start(editorHost: () => HTMLElement | undefined, previewRoot: () => HTMLElement | undefined) {
   startWatch();
   const inbound = readInbound();
   let open: Doc[];

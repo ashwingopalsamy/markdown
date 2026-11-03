@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { app, tabs, activate, boot, closeTab, current, cycleView, fresh, getEditor, openFiles, openPicked, openTour, remember, pageTitle, rememberActive, save, title, wantOutline } from './lib/app.svelte';
+  import { app, tabs, activate, boot, closeTab, current, cycleView, fresh, getEditor, isDemo, openFiles, openPicked, openTour, remember, pageTitle, rememberActive, save, title, wantOutline } from './lib/app.svelte';
   import { look, setText, stepText, theme, toggleTheme } from './lib/theme.svelte';
   import { requests, violations, onChange } from './lib/trust';
   import Icon from './lib/ui/Icon.svelte';
@@ -18,6 +18,11 @@
   // The cards come after the first paint: at once when one is asked for, and otherwise as soon as the page is idle, so opening one never waits.
   let Sheets = $state<typeof import('./lib/ui/Sheets.svelte').default>();
   const sheets = () => import('./lib/ui/Sheets.svelte').then((m) => (Sheets = m.default));
+  // The demo's strip is only needed while a demo is open
+  let Strip = $state<typeof import('./lib/ui/Demo.svelte').default>();
+  $effect(() => {
+    if (!__LOCAL__ && isDemo() && !Strip) import('./lib/ui/Demo.svelte').then((m) => (Strip = m.default));
+  });
 
   onMount(() => {
     boot(() => host, () => root);
@@ -121,6 +126,7 @@
 <header class="bar">
   <div class="inner">
     <nav class="tb pill" aria-label="Open documents">
+      {#if !__LOCAL__}<a class="icon tb-home" href="/" data-tip="Home" aria-label="Home"><Icon name="home" /></a>{/if}
       <Tabs />
       <button class="icon tb-new" data-pop="open" data-tip="Open · ⌘O" aria-label="Open" aria-haspopup="dialog" aria-expanded={ui.pop === 'open'} onclick={() => toggle('open')}><Icon name="plus" /></button>
     </nav>
@@ -146,6 +152,8 @@
 </header>
 
 <Search />
+
+{#if Strip && isDemo()}<Strip />{/if}
 
 <main class="desk {app.view}" bind:this={desk} style:--split={app.split}>
   <section class="pane write" aria-label="Source" bind:this={host}></section>

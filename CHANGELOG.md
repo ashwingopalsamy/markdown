@@ -4,6 +4,7 @@ Versions follow [semantic versioning](https://semver.org). Each release lists wh
 
 ## Unreleased
 
+- The hosted site opens on a landing page: what md is, a comparison with six other tools (each answer dated and sourced), where your text goes, and a demo. Start writing, Try the demo, a dropped file or a link opens the editor in place; a Home button and closing the last tab return. The demo is the tour with a Clear button, and leaves nothing behind. md Local is unchanged.
 - A text size control, from 90% to 140%, in a pill at the bottom right. ⌥⌘= and ⌥⌘− step it up and down.
 - The reading column can be 760px (the default), 1120px or the full window, set in Settings.
 - In md Local, Show in Finder at the bottom left opens Finder with the file selected.

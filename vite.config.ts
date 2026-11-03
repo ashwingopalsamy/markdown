@@ -1,11 +1,12 @@
 import { createHash } from 'node:crypto'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
-import { dirname, join, relative } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 import { gzipSync } from 'node:zlib'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { marked } from 'marked'
 import { defineConfig, type Plugin } from 'vite'
 import { engineFiles } from './tools/engine.mjs'
+import { homeMd, meta as homeMeta, withHome, withoutHome } from './tools/home.ts'
 import { ENGINE_POLICY, GUIDE_META, GUIDE_POLICY, LOCAL_META_POLICY, LOCAL_PAGE_POLICY, META_POLICY, META_TAGS, ORIGIN, PAGE_POLICY, SW_POLICY } from './tools/policy.mjs'
 
 // Files the offline copy leaves out: source maps, the worker itself, and files that are not served as files.
@@ -37,6 +38,34 @@ const LOCAL_COPY: [string, string][] = [
   ],
   ['md runs in your browser and needs JavaScript. It makes no requests with it.', 'md needs JavaScript. With it, the page talks only to md on this machine.'],
 ]
+
+// The hosted index.html names the landing page and its Markdown copy; md Local keeps the short title and has neither. A line that is no longer there stops the build.
+const WEB_COPY: [string, string][] = [
+  ['<title>md</title>', `<title>${homeMeta.title.replace(/&/g, '&amp;')}</title>\n    <link rel="alternate" type="text/markdown" href="index.md" />`],
+  [
+    'A Markdown editor that runs entirely in your browser. Nothing is uploaded, and the page is not able to upload. Works offline and on localhost.',
+    homeMeta.description.replace(/"/g, '&quot;'),
+  ],
+]
+
+/** The landing page (index.html, between <!--home-->…<!--/home-->) is filled from site/home.copy.ts and site/compare.ts on the hosted site, and cut out of md Local's page. */
+function landing(local: boolean): Plugin {
+  return {
+    name: 'landing',
+    transformIndexHtml: {
+      order: 'pre',
+      handler(html) {
+        if (local) return withoutHome(html)
+        let out = withHome(html)
+        for (const [from, to] of WEB_COPY) {
+          if (!out.includes(from)) throw new Error(`index.html no longer has: ${from}`)
+          out = out.replace(from, to)
+        }
+        return out
+      },
+    },
+  }
+}
 
 /** The policy as a <meta> tag, first in <head>, on the app page. Build only: the dev server needs inline HMR and a socket. */
 function policy(local: boolean): Plugin {
@@ -83,10 +112,30 @@ function finish(local: boolean): Plugin {
       if (local) copyFileSync('src/lib/tour.md', join(out, 'tour.md'))
       const all = walk(out).map((f) => relative(out, f).split('\\').join('/'))
       const html = readFileSync(join(out, 'index.html'), 'utf8')
+      // index.html, then the files it names. Hosted, that is the landing page; the editor is a chunk the landing page loads on action and has its own line below.
       const first = [...html.matchAll(/(?:src|href)="(?:\.\.\/|\/)?([^"]+\.(?:js|css))"/g)].map((m) => (base && m[1].startsWith(`${base}/`) ? m[1].slice(base.length + 1) : m[1]))
       const core = gz('index.html') + first.reduce((n, f) => n + gz(f), 0)
       console.log(`first screen: ${core} bytes gz (index.html, ${first.join(', ')})`)
       if (core > BUDGET) throw new Error(`The first screen is ${core} bytes gzipped; the budget is ${BUDGET.toLocaleString('en')}.`)
+      if (!local) {
+        // what the landing page loads on Start: the editor chunk, the chunks it imports at load (not the ones it imports later), and their stylesheets
+        const graph = new Set<string>()
+        const walkJs = (f: string) => {
+          if (graph.has(f)) return
+          graph.add(f)
+          const head = readFileSync(join(out, f), 'utf8').slice(0, 4000)
+          for (const m of head.matchAll(/(?:from|import)\s*"\.\/([^"]+\.js)"/g)) walkJs(`assets/${m[1]}`)
+        }
+        const begin = all.find((f) => /^assets\/begin-[\w-]+\.js$/.test(f))
+        if (!begin) throw new Error('The editor chunk assets/begin-*.js is not in the build')
+        walkJs(begin)
+        const sheets = all.filter((f) => f.endsWith('.css') && [...graph].some((j) => j.replace(/-[\w-]{8}\.js$/, '') === f.replace(/-[\w-]{8}\.css$/, '')))
+        // the landing page's own script and stylesheet are already loaded
+        const editor = [...graph, ...sheets].filter((f) => !first.includes(f))
+        const size = editor.reduce((n, f) => n + gz(f), 0)
+        console.log(`editor on start: ${size} bytes gz (${editor.length} files, from ${begin})`)
+        if (size > BUDGET) throw new Error(`The editor's own files are ${size} bytes gzipped; the budget is ${BUDGET.toLocaleString('en')}.`)
+      }
       if (local) return
 
       const precache = [...all.filter((f) => !SKIP.test(f.split('/').pop()!) && !/\.map$/.test(f) && !ONUSE.test(f) && !ENGINE.test(f)), ...LATE].sort()
@@ -178,6 +227,9 @@ ${body}
     generateBundle() {
       const sheet = this.getFileName(this.emitFile({ type: 'asset', name: 'guide.css', source: readFileSync('src/about/guide.css', 'utf8') }))
       const all = GUIDES.map(guide)
+      // the landing page's Markdown copy, with the comparison in it, at /index.md (hosted only: md Local has no landing page)
+      const home = local ? null : guide('home')
+      if (home) this.emitFile({ type: 'asset', fileName: 'index.md', source: homeMd(home.body) })
       for (const g of all) {
         this.emitFile({ type: 'asset', fileName: `${g.slug}/index.html`, source: render(g, `${base}${sheet}`, true) })
         this.emitFile({ type: 'asset', fileName: `${g.slug}/index.md`, source: g.body })
@@ -199,7 +251,7 @@ md is a web page at ${ORIGIN}/. Every page below has a Markdown version at the a
 
 ## Pages
 
-${all.map((g) => `- [${g.title}](${g.slug}/index.md): ${g.description}`).join('\n')}
+${[...(home ? [{ title: 'md', slug: '', description: home.description }] : []), ...all].map((g) => `- [${g.title}](${g.slug ? `${g.slug}/` : ''}index.md): ${g.description}`).join('\n')}
 
 ## Optional
 
@@ -214,7 +266,8 @@ export default defineConfig(({ mode }) => {
   const local = mode === 'md-local'
   return {
     define: { __LOCAL__: JSON.stringify(local) },
-    plugins: [svelte(), policy(local), pages(local), finish(local)],
+    plugins: [svelte(), landing(local), policy(local), pages(local), finish(local)],
+    resolve: { alias: { '@entry': resolve(local ? 'src/about/entry-local.ts' : 'src/about/home.ts') } },
     build: {
       outDir: local ? 'dist-local' : 'dist',
       // Every browser the editor supports preloads modules natively, so the polyfill would only add weight to the first load.

@@ -1,6 +1,4 @@
-import { mount } from 'svelte'
-import './app.css'
-import App from './App.svelte'
+// '@entry' is the one thing the two editions do differently (vite.config.ts): md Local mounts the editor at once; the hosted site shows its landing page first.
+import { enter } from '@entry'
 
-mount(App, { target: document.getElementById('app')! })
-if (import.meta.env.PROD && !__LOCAL__) navigator.serviceWorker?.register('/sw.js').catch(() => {})
+enter()

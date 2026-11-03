@@ -15,6 +15,7 @@
     chevron: 'm6 9 6 6 6-6',
     file: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7ZM14 2v4a2 2 0 0 0 2 2h4',
     x: 'M6 6l12 12M18 6 6 18',
+    home: 'M3 11.5 12 4l9 7.5M5.5 10v9.5a1 1 0 0 0 1 1H10v-5.5h4v5.5h3.5a1 1 0 0 0 1-1V10',
   } as const;
   // `d` is a path from ./glyphs.ts, which cards and the like import, so their symbols stay out of the first screen
   let { name, d, size = 18 }: { name?: keyof typeof PATHS; d?: string; size?: number } = $props();

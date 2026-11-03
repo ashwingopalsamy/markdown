@@ -6,7 +6,7 @@ This is the hosted edition. md Local, a second edition for one machine with its 
 
 ## Product behaviour
 
-- Opening the site puts you straight in an editor with your last open documents, or a fresh one. No landing page.
+- Hosted: `/` is always a landing page (`index.html` between `<!--home-->` and `<!--/home-->`, words from `site/home.copy.ts`, table from `site/compare.ts`; every verdict needs a source address, and the build fails without one). Start restores the last open documents or a fresh one; Try the demo opens the tour as a tab that Clear, or closing it, deletes; a dropped file or a `#` link skips the landing page. The editor mounts in place, and closing the last tab returns to the landing page. md Local has no landing page and opens straight into the editor.
 - Open a file by drop, paste, picker, or a link whose `#` fragment carries the file. Open a folder (Chromium).
 - Four views: Page (the rendered document, edited in place; the default), Write, Split, Read. Split has block-level scroll sync, and is not offered below 860 px wide.
 - Work is autosaved to IndexedDB on this device. Not cookies: a cookie is sent to the server with every request, which is the exact thing we promise not to do. This app sets none.

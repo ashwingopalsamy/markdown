@@ -84,8 +84,9 @@ const block = (path, headers) => `${path}\n${Object.entries(headers).map(([k, v]
 const md = { Link: '<index.md>; rel="alternate"; type="text/markdown"' };
 const rules = [
   block('/*', HEADERS),
-  block('/', { 'Content-Security-Policy': pagePolicy }),
-  block('/index.html', { 'Content-Security-Policy': pagePolicy }),
+  // hosted: the landing page has a Markdown copy at /index.md (vite.config.ts); md Local has none
+  block('/', { 'Content-Security-Policy': pagePolicy, ...(local ? {} : md) }),
+  block('/index.html', { 'Content-Security-Policy': pagePolicy, ...(local ? {} : md) }),
   ...guides.flatMap((p) => [block(p, { 'Content-Security-Policy': GUIDE_POLICY, ...md }), block(`${p}index.html`, { 'Content-Security-Policy': GUIDE_POLICY, ...md })]),
   block('/404.html', { 'Content-Security-Policy': NOT_FOUND_POLICY }),
   ...(local ? [] : [block('/sw.js', { 'Content-Security-Policy': SW_POLICY, 'Cache-Control': 'no-cache' })]),

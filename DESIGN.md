@@ -28,7 +28,7 @@ md is the sibling of ipynb viewer and keeps its language: neutral and calm, so t
 
 ## What differs from ipynb viewer
 
-- **An editor, not a reader.** The app opens straight into a document you can write in. There is no landing page and no demo.
+- **An editor, not a reader.** md Local opens straight into a document you can write in. The hosted site's `/` is a landing page (the ipynb viewer's look, lighter) with a comparison built from `site/compare.ts`; Start, the demo (the tour, which Clear deletes), a drop or a `#` link mounts the editor in place.
 - **Three views.** Write, Split and Read, as a segmented control in the right pill. Split has one hairline you can drag. Phones get Write and Read.
 - **Two typefaces in the paper.** Inter for the rendered text and the interface, JetBrains Mono at 13.5px in the editor and in code. The editor's syntax colours come from tokens, not hex values.
 - **Tabs are documents.** The left pill holds a chip per open document and a `+`; an unsaved-to-disk dot sits on the chip.
